@@ -1,0 +1,28 @@
+ul#nav {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: -16px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul#nav > li {
+    display: flex;
+}
+
+ul#nav > li > a#home-a {
+    margin-right: 20px;
+}
+
+ul#nav > li > a#login-a {
+    margin-left: 1000px;
+}
+
+ul#nav > li > a#signup-a {
+    margin-left: 20px;
+    margin-right: 20px;
+}
