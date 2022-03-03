@@ -1,0 +1,15 @@
+div#home {
+    background-color: burlywood;
+    position: relative;
+    top: 50px;
+}
+
+div#home > div#popular-div {
+    display: flex;
+    align-items: center;
+}
+
+div#home > ul {
+    display: flex;
+    justify-content: space-evenly;
+}
