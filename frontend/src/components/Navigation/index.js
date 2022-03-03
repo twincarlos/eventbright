@@ -19,7 +19,7 @@ function Navigation({ isLoaded }){
       <>
         <NavLink id='login-a' to="/login">Log In</NavLink>
         <NavLink id='signup-a' to="/signup">Sign Up</NavLink>
-        <a id='demo-a' onClick={() => dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))}>Demo</a>
+        <a href='/' id='demo-a' onClick={() => dispatch(sessionActions.login({ credential: 'music@production.io', password: 'password' }))}>Demo</a>
       </>
     );
   }
