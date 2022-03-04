@@ -14,15 +14,15 @@ ul#nav > li {
     display: flex;
 }
 
+ul#nav > li > div#session-links {
+    margin-left: 750px;
+}
+
 ul#nav > li > a#home-a {
     margin-right: 20px;
 }
 
-ul#nav > li > a#login-a {
-    margin-left: 1000px;
-}
-
-ul#nav > li > a#signup-a {
+ul#nav > li > div#session-links > a#signup-a {
     margin-left: 20px;
     margin-right: 20px;
 }

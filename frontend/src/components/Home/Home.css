@@ -13,3 +13,7 @@ div#home > ul {
     display: flex;
     justify-content: space-evenly;
 }
+
+div.event-widget {
+    border: 1px solid greenyellow;
+}

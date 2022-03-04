@@ -29,4 +29,11 @@ router.get('/search/:location/:category', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    const event = await Event.findByPk(req.params.id);
+    const host = await User.findByPk(event.hostId);
+
+    return res.json({ event, host });
+});
+
 module.exports = router;

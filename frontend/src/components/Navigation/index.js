@@ -16,11 +16,11 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
-      <>
+      <div id='session-links'>
         <NavLink id='login-a' to="/login">Log In</NavLink>
         <NavLink id='signup-a' to="/signup">Sign Up</NavLink>
         <a href='/' id='demo-a' onClick={() => dispatch(sessionActions.login({ credential: 'music@production.io', password: 'password' }))}>Demo</a>
-      </>
+      </div>
     );
   }
 
