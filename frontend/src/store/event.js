@@ -9,8 +9,11 @@ const getEvents = eventList => {
     }
 }
 
-export const getAllEvents = () => async dispatch => {
-    const response = await csrfFetch('/api/events/');
+export const getAllEvents = (data) => async dispatch => {
+    let { location, category } = data;
+    if (!location) location = 'any';
+
+    const response = await csrfFetch(`/api/events/search/${location}/${category}`);
     const eventList = await response.json();
     dispatch(getEvents(eventList));
     return eventList;
