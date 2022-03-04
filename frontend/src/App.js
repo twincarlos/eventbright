@@ -6,6 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import EventPage from "./components/EventPage";
+import UserPage from "./components/UserPage";
 
 import Home from "./components/Home";
 
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path='/events/:id'>
             <EventPage />
+          </Route>
+          <Route path='/users/:id'>
+            <UserPage />
           </Route>
         </Switch>
       )}
