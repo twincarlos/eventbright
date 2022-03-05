@@ -80,7 +80,7 @@ module.exports = {
       },
       // SPORTS
       {
-        hostId: 1,
+        hostId: 2,
         name: 'Soccer Tournament',
         image: 'https://cdn.vox-cdn.com/thumbor/CMpP4ciMgVubjGvnSCH9ydzejHk=/0x0:4731x3149/1200x800/filters:focal(2062x1018:2818x1774)/cdn.vox-cdn.com/uploads/chorus_image/image/68967772/usa_today_13819349.0.jpg',
         venue: 'Madison Square Garden',
@@ -97,7 +97,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        hostId: 1,
+        hostId: 2,
         name: 'Volleyball Tournament',
         image: 'https://i.pinimg.com/originals/32/b7/ec/32b7eca4b5bbca2ac80d4ac724e56204.jpg',
         venue: 'LA Memorial Coliseum',
@@ -114,7 +114,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        hostId: 1,
+        hostId: 2,
         name: 'Table Tennis Tournament',
         image: 'https://img.olympicchannel.com/images/image/private/t_16-9_3200/primary/amda89zlqlmvwxv8fo7t',
         venue: 'Wembley Stadium',

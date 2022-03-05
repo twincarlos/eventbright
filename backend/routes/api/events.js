@@ -44,4 +44,9 @@ router.post('/', async (req, res) => {
     return res.json({ newEvent, host });
 });
 
+router.get('/users/:userId', async (req, res) => {
+    const events = await Event.findAll({ where: { hostId: req.params.userId } });
+    return res.json(events);
+});
+
 module.exports = router;
