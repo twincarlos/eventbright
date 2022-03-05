@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_ALL_EVENTS = 'events/getAllEvents';
 const GET_ONE_EVENT = 'events/getOneEvent';
+const CREATE_EVENT = 'events/createEvent';
 
 const getEvents = eventList => {
     return {
@@ -14,6 +15,13 @@ const getEvent = event => {
     return {
         type: GET_ONE_EVENT,
         event
+    }
+}
+
+const createEvent = newEvent => {
+    return {
+        type: CREATE_EVENT,
+        newEvent
     }
 }
 
@@ -34,6 +42,20 @@ export const getOneEvent = id => async dispatch => {
     return event;
 }
 
+export const createOneEvent = data => async dispatch => {
+    const response = await csrfFetch('/api/events', {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const newEvent = await response.json();
+    dispatch(createEvent(newEvent));
+    return newEvent;
+}
+
 const initialState = {};
 
 const eventsReducer = (state = initialState, action) => {
@@ -42,7 +64,10 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state, eventList: action.eventList };
         }
         case GET_ONE_EVENT: {
-            return { ...state, event: action.event }
+            return { ...state, event: action.event };
+        }
+        case CREATE_EVENT: {
+            return { ...state, eventList: [action.newEvent, ...state.eventList] };
         }
         default:
             return state;

@@ -9,6 +9,11 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
+  const handleDemo = e => {
+    e.preventDefault();
+    return dispatch(sessionActions.login({ credential: 'music@production.io', password: 'password' }));
+  }
+
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -19,7 +24,7 @@ function Navigation({ isLoaded }){
       <div id='session-links'>
         <NavLink id='login-a' to="/login">Log In</NavLink>
         <NavLink id='signup-a' to="/signup">Sign Up</NavLink>
-        <a href='/' id='demo-a' onClick={() => dispatch(sessionActions.login({ credential: 'music@production.io', password: 'password' }))}>Demo</a>
+        <a href='/' id='demo-a' onClick={handleDemo}>Demo</a>
       </div>
     );
   }

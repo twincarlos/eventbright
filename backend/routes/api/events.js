@@ -36,4 +36,12 @@ router.get('/:id', async (req, res) => {
     return res.json({ event, host });
 });
 
+router.post('/', async (req, res) => {
+    const { hostId, name, image, venue, address, city, state, country, price, rating, category, date, cancelled } = req.body;
+    const host = await User.findByPk(hostId);
+    const newEvent = await Event.create({ hostId, name, image, venue, address, city, state, country, price, rating, category, date, cancelled });
+    await newEvent.save();
+    return res.json({ newEvent, host });
+});
+
 module.exports = router;
