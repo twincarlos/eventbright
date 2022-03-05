@@ -82,7 +82,7 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state, event: action.event };
         }
         case CREATE_EVENT: {
-            return { ...state, eventList: [action.newEvent, ...state.eventList] };
+            return { ...state, newEvent: action.newEvent };
         }
         case GET_EVENTS_BY_HOST: {
             return { ...state, eventList: action.eventList };

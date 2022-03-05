@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import EventPage from "./components/EventPage";
 import UserPage from "./components/UserPage";
+import CreateEvent from "./components/CreateEvent";
 
 import Home from "./components/Home";
 
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path='/users/:id'>
             <UserPage />
+          </Route>
+          <Route path='/create-event'>
+            <CreateEvent />
           </Route>
         </Switch>
       )}
