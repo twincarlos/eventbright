@@ -10,6 +10,7 @@ function UserPage() {
     const dispatch = useDispatch();
     const userId = useParams().id;
     const user = useSelector(state => state.user.user);
+    const sessionUser = useSelector(state => state.session.user);
     const eventList = useSelector(state => state.event.eventList);
 
     useEffect(() => {
@@ -19,10 +20,17 @@ function UserPage() {
 
     if (!user || !eventList) return null;
 
+    // <i className="far fa-heart"></i>
+
     return (
         <div id='user-page'>
             <p>{user.username}</p>
-            { eventList.map(event => <p key={event.id.toString()}>{event.name}</p>) }
+            {
+                sessionUser?.id.toString() === userId.toString() ?
+                eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="fas fa-edit"></i></span>)
+                :
+                eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="far fa-heart"></i></span>)
+            }
         </div>
     );
 }
