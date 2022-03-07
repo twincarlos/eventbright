@@ -23,37 +23,47 @@ function CreateEvent() {
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
     const [date, setDate] = useState(today);
+    const [error, setError] = useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(createOneEvent({
-            hostId: sessionUser.id,
-            name,
-            image,
-            venue,
-            address,
-            city,
-            state,
-            country: 'United States',
-            price,
-            rating: 3.00,
-            category,
-            date,
-            cancelled: false
-        }));
-        setName('');
-        setImage('');
-        setVenue('');
-        setAddress('');
-        setCity('');
-        setState('');
-        setPrice(0);
-        setCategory('');
-        setDate(today);
+
+        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !price.length || !category.length || !date.length) {
+            setError(true);
+        } else {
+            setError(false);
+
+            dispatch(createOneEvent({
+                hostId: sessionUser.id,
+                name,
+                image,
+                venue,
+                address,
+                city,
+                state,
+                country: 'United States',
+                price,
+                rating: 3.00,
+                category,
+                date,
+                cancelled: false
+            }));
+
+            setName('');
+            setImage('');
+            setVenue('');
+            setAddress('');
+            setCity('');
+            setState('');
+            setPrice(0);
+            setCategory('');
+            setDate(today);
+        }
     }
 
     return (
         <div id='create-event'>
+            { error && <p>All fields are required!</p> }
             <form onSubmit={handleSubmit}>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
                 <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>

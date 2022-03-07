@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useParams } from 'react-router-dom';
 import { editOneEvent, deleteOneEvent } from '../../store/event';
 
 import './EditEvent.css';
 
 function EditEvent({ event, setEditEvent }) {
     const dispatch = useDispatch();
-    // const eventId = useParams().eventId;
-    // const event = useSelector(state => state.event.event?.event);
     const sessionUser = useSelector(state => state.session.user);
 
     const [name, setName] = useState(event.name);
@@ -20,38 +17,46 @@ function EditEvent({ event, setEditEvent }) {
     const [price, setPrice] = useState(event.price);
     const [category, setCategory] = useState(event.category);
     const [date, setDate] = useState(event.date);
-
-    // useEffect(() => {
-    //     dispatch(getOneEvent(eventId));
-    // }, [dispatch, eventId]);
+    const [error, setError] = useState(false);
 
     if (!event) return null;
 
     const handleEdit = e => {
         e.preventDefault();
-        dispatch(editOneEvent({
-            id: event.id,
-            hostId: sessionUser.id,
-            name: name,
-            image: image,
-            venue: venue,
-            address: address,
-            city: city,
-            state: state,
-            country: 'United States',
-            price: price,
-            rating: event.rating,
-            category: category,
-            date: date,
-            cancelled: false
-        }));
+
+        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !price.length || !category.length || !date.length) {
+            setError(true);
+        } else {
+            setError(false);
+            dispatch(editOneEvent({
+                id: event.id,
+                hostId: sessionUser.id,
+                name: name,
+                image: image,
+                venue: venue,
+                address: address,
+                city: city,
+                state: state,
+                country: 'United States',
+                price: price,
+                rating: event.rating,
+                category: category,
+                date: date,
+                cancelled: false
+            }));
+
+            return setEditEvent(null);
+        }
+
     };
 
     return (
         <div id='edit-event'>
             {
                 event ?
-                <form onSubmit={handleEdit}>
+                <>
+                    { error && <p>All fields are required!</p> }
+                    <form onSubmit={handleEdit}>
                         <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
                         <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
                         <input placeholder='venue' type='text' onChange={e => setVenue(e.target.value)} value={venue}></input>
@@ -61,12 +66,16 @@ function EditEvent({ event, setEditEvent }) {
                         <input placeholder='price' type='number' onChange={e => setPrice(e.target.value)} value={price}></input>
                         <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
                         <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
-                        <button>Create</button>
+                            <button>Create</button>
                     </form>
+                </>
                     :
                     null
             }
-            <button onClick={() => dispatch(deleteOneEvent(event.id))}>Delete</button>
+            <button onClick={() => {
+                dispatch(deleteOneEvent(event.id));
+                setEditEvent(false);
+            }}>Delete</button>
             <button onClick={() => setEditEvent(null)}>Cancel</button>
         </div>
     );
