@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
+import { Modal } from '../../context/Modal';
 
 import './EventPage.css';
 
@@ -10,6 +11,7 @@ function EventPage() {
     const event = useSelector(state => state.event.event?.event);
     const host = useSelector(state => state.event.event?.host);
     const eventId = useParams().id;
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         dispatch(getOneEvent(eventId));
@@ -32,13 +34,19 @@ function EventPage() {
                 <div id='event-interaction'>
                     <i className="fas fa-share-alt"></i>
                     <i className="far fa-heart"></i>
-                    <button>Tickets</button>
+                    <button onClick={() => setShowModal(true)}>Tickets</button>
                 </div>
                 <div id='event-info'>
                     <h1>About Event</h1>
                     <p>I haven't implemented this section yet :-(</p>
                 </div>
             </div>
+            {
+                showModal &&
+                <Modal onClose={() => setShowModal(false)}>
+                    <h1>GET TICKETS</h1>
+                </Modal>
+            }
         </div>
     );
 }
