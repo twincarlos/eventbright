@@ -37,9 +37,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { hostId, name, image, venue, address, city, state, country, price, rating, category, date, cancelled } = req.body;
-    // const host = await User.findByPk(hostId);
-    const newEvent = await Event.create({ hostId, name, image, venue, address, city, state, country, price, rating, category, date, cancelled });
+    const { hostId, name, image, venue, address, city, state, country, category, date } = req.body;
+    const newEvent = await Event.create({ hostId, name, image, venue, address, city, state, country, category, date });
     await newEvent.save();
     return res.json(newEvent);
 });
@@ -50,15 +49,13 @@ router.get('/users/:userId', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    // const editedEvent = await Event.update(req.body, { where: { id: req.body.id } });
     const editedEvent = await Event.findByPk(req.body.id);
     await editedEvent.update(req.body);
-    // console.log(editedEvent);
     return res.json(editedEvent);
 });
 
 router.delete('/', async (req, res) => {
-    const deletedEvent = await Event.findByPk(req.body.eventId);
+    const deletedEvent = await Event.findByPk(req.body.id);
     await deletedEvent.destroy();
     return res.json(deletedEvent);
 });

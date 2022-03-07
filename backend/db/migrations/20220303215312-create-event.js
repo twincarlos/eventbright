@@ -41,14 +41,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      price: {
-        allowNull: false,
-        type: Sequelize.DECIMAL
-      },
-      rating: {
-        allowNull: false,
-        type: Sequelize.FLOAT
-      },
       category: {
         allowNull: false,
         type: Sequelize.STRING
@@ -56,10 +48,6 @@ module.exports = {
       date: {
         allowNull: false,
         type: Sequelize.DATEONLY
-      },
-      cancelled: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

@@ -34,14 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    price: {
-      allowNull: false,
-      type: DataTypes.DECIMAL
-    },
-    rating: {
-      allowNull: false,
-      type: DataTypes.FLOAT
-    },
     category: {
       allowNull: false,
       type: DataTypes.STRING
@@ -49,12 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       allowNull: false,
       type: DataTypes.DATEONLY
-    },
-    cancelled: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN }
-    }, {});
-  Event.associate = function(models) {
+    }
+  }, {});
+  Event.associate = function (models) {
     // associations can be defined here
     Event.belongsTo(models.User, { foreignKey: 'hostId' });
     Event.hasMany(models.Ticket, { foreignKey: 'eventId' });

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
+import { getAllTickets } from '../../store/ticket';
 import { Modal } from '../../context/Modal';
 
 import './EventPage.css';
@@ -15,6 +16,7 @@ function EventPage() {
 
     useEffect(() => {
         dispatch(getOneEvent(eventId));
+        dispatch(getAllTickets(eventId));
     }, [dispatch, eventId]);
 
     if (!event || !host) return null;

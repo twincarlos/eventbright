@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import event from './event';
 import user from './user';
+import ticket from './ticket';
 
 let enhancer;
 
@@ -23,7 +24,8 @@ const configureStore = (preloadedState) => {
 const rootReducer = combineReducers({
   session: sessionReducer,
   event,
-  user
+  user,
+  ticket
 });
 
 export default configureStore;

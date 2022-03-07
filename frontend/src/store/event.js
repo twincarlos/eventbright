@@ -101,13 +101,13 @@ export const editOneEvent = data => async dispatch => {
     return editedEvent;
 }
 
-export const deleteOneEvent = eventId => async dispatch => {
+export const deleteOneEvent = id => async dispatch => {
     const response = await csrfFetch('/api/events', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({eventId})
+        body: JSON.stringify({id})
     });
 
     const deletedEvent = await response.json();
@@ -136,9 +136,7 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case EDIT_EVENT: {
-            state.eventList = state.eventList.map(event => {
-                return event.id === action.editedEvent.id ? action.editedEvent : event
-            });
+            state.eventList = state.eventList.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
             return { ...state };
         }
         case DELETE_EVENT: {

@@ -8,15 +8,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       eventId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'Events' }
       },
-      userId: {
-        alloNull: false,
-        type: Sequelize.INTEGER,
-        references: { model: 'Users' }
+      price: {
+        allowNull: false,
+        type: Sequelize.DECIMAL
       },
       amount: {
         type: Sequelize.INTEGER

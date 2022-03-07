@@ -20,7 +20,6 @@ function CreateEvent() {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
     const [date, setDate] = useState(today);
     const [error, setError] = useState(false);
@@ -28,7 +27,7 @@ function CreateEvent() {
     const handleSubmit = e => {
         e.preventDefault();
 
-        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !price.length || !category.length || !date.length) {
+        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length) {
             setError(true);
         } else {
             setError(false);
@@ -42,11 +41,8 @@ function CreateEvent() {
                 city,
                 state,
                 country: 'United States',
-                price,
-                rating: 3.00,
                 category,
-                date,
-                cancelled: false
+                date
             }));
 
             setName('');
@@ -55,7 +51,6 @@ function CreateEvent() {
             setAddress('');
             setCity('');
             setState('');
-            setPrice(0);
             setCategory('');
             setDate(today);
         }
@@ -71,7 +66,6 @@ function CreateEvent() {
                 <input placeholder='address' type='text' onChange={e => setAddress(e.target.value)} value={address}></input>
                 <input placeholder='city' type='text' onChange={e => setCity(e.target.value)} value={city}></input>
                 <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
-                <input placeholder='price' type='number' onChange={e => setPrice(e.target.value)} value={price}></input>
                 <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
                 <button>Create</button>
