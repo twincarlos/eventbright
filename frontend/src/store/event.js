@@ -69,7 +69,7 @@ export const getOneEvent = id => async dispatch => {
 export const createOneEvent = data => async dispatch => {
     const response = await csrfFetch('/api/events', {
         method: 'POST',
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
