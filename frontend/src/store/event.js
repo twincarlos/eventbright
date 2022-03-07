@@ -4,6 +4,8 @@ const GET_ALL_EVENTS = 'events/getAllEvents';
 const GET_ONE_EVENT = 'events/getOneEvent';
 const CREATE_EVENT = 'events/createEvent';
 const GET_EVENTS_BY_HOST = 'events/getEventsByHost';
+const EDIT_EVENT = 'events/editEvent';
+const DELETE_EVENT = 'events/deleteEvent';
 
 const getEvents = eventList => {
     return {
@@ -30,6 +32,20 @@ const getEventsByHost = eventList => {
     return {
         type: GET_EVENTS_BY_HOST,
         eventList
+    }
+}
+
+const editEvent = editedEvent => {
+    return {
+        type: EDIT_EVENT,
+        editedEvent
+    }
+}
+
+const deleteEvent = deletedEvent => {
+    return {
+        type: DELETE_EVENT,
+        deletedEvent
     }
 }
 
@@ -71,6 +87,34 @@ export const getAllEventsByHost = userId => async dispatch => {
     return eventList;
 }
 
+export const editOneEvent = data => async dispatch => {
+    const response = await csrfFetch('/api/events', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const editedEvent = await response.json();
+    dispatch(editEvent(editedEvent));
+    return editedEvent;
+}
+
+export const deleteOneEvent = eventId => async dispatch => {
+    const response = await csrfFetch('/api/events', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({eventId})
+    });
+
+    const deletedEvent = await response.json();
+    dispatch(deleteEvent(deletedEvent));
+    return deletedEvent;
+}
+
 const initialState = {};
 
 const eventsReducer = (state = initialState, action) => {
@@ -82,10 +126,20 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state, event: action.event };
         }
         case CREATE_EVENT: {
-            return { ...state, newEvent: action.newEvent };
+            state.eventList = [action.newEvent, ...state.eventList];
+            return { ...state };
         }
         case GET_EVENTS_BY_HOST: {
-            return { ...state, eventList: action.eventList };
+            state.eventList = action.eventList;
+            return { ...state };
+        }
+        case EDIT_EVENT: {
+            state.eventList = state.eventList.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
+            return { ...state };
+        }
+        case DELETE_EVENT: {
+            state.eventList = state.eventList.filter(event => event.id !== action.deletedEvent.id);
+            return { ...state };
         }
         default:
             return state;

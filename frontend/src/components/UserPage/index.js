@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneUser } from '../../store/user';
 import { getAllEventsByHost } from '../../store/event';
+import EditEvent from '../EditEvent';
 
 import './UserPage.css';
 
@@ -12,6 +13,7 @@ function UserPage() {
     const user = useSelector(state => state.user.user);
     const sessionUser = useSelector(state => state.session.user);
     const eventList = useSelector(state => state.event.eventList);
+    const [editEvent, setEditEvent] = useState(null);
 
     useEffect(() => {
         dispatch(getOneUser(userId));
@@ -26,10 +28,11 @@ function UserPage() {
         <div id='user-page'>
             <p>{user.username}</p>
             {
-                sessionUser?.id.toString() === userId.toString() ?
-                eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="fas fa-edit"></i></span>)
-                :
-                eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="far fa-heart"></i></span>)
+                editEvent ? <EditEvent event={editEvent} setEditEvent={setEditEvent}/> :
+                    (sessionUser?.id.toString() === userId.toString() ?
+                    eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="fas fa-edit" onClick={() => setEditEvent(event)}></i></span>)
+                    :
+                    eventList.map(event => <span key={event.id.toString()}><p>{event.name}</p><i className="far fa-heart"></i></span>))
             }
         </div>
     );

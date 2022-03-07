@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import EventPage from "./components/EventPage";
 import UserPage from "./components/UserPage";
 import CreateEvent from "./components/CreateEvent";
+import EditEvent from "./components/EditEvent";
 
 import Home from "./components/Home";
 
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path='/create-event'>
             <CreateEvent />
+          </Route>
+          <Route path='/edit-event/:eventId'>
+            <EditEvent />
           </Route>
         </Switch>
       )}

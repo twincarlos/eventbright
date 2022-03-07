@@ -49,4 +49,18 @@ router.get('/users/:userId', async (req, res) => {
     return res.json(events);
 });
 
+router.put('/', async (req, res) => {
+    // const editedEvent = await Event.update(req.body, { where: { id: req.body.id } });
+    const editedEvent = await Event.findByPk(req.body.id);
+    await editedEvent.update(req.body);
+    // console.log(editedEvent);
+    return res.json(editedEvent);
+});
+
+router.delete('/', async (req, res) => {
+    const deletedEvent = await Event.findByPk(req.body.eventId);
+    await deletedEvent.destroy();
+    return res.json(deletedEvent);
+});
+
 module.exports = router;
