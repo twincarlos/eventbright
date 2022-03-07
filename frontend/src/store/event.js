@@ -120,7 +120,8 @@ const initialState = {};
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_EVENTS: {
-            return { ...state, eventList: action.eventList };
+            state.eventList = action.eventList;
+            return { ...state };
         }
         case GET_ONE_EVENT: {
             return { ...state, event: action.event };
