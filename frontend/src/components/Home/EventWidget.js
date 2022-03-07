@@ -7,7 +7,7 @@ function EventWidget({ event }) {
 
     return (
         <div className='event-widget'>
-            <NavLink to={`/events/${event.id}`}><img src={event.image}></img></NavLink>
+            <NavLink to={`/events/${event.id}`}><img src={event.image} alt=''></img></NavLink>
             <div>
                 <NavLink to={`/events/${event.id}`}><p className='event-name'>{event.name}</p></NavLink>
                 <p className='event-date'>{date}</p>
