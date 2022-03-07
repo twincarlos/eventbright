@@ -124,7 +124,8 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case GET_ONE_EVENT: {
-            return { ...state, event: action.event };
+            state.event = action.event;
+            return { ...state };
         }
         case CREATE_EVENT: {
             state.eventList = [action.newEvent, ...state.eventList];
@@ -135,7 +136,9 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case EDIT_EVENT: {
-            state.eventList = state.eventList.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
+            state.eventList = state.eventList.map(event => {
+                return event.id === action.editedEvent.id ? action.editedEvent : event
+            });
             return { ...state };
         }
         case DELETE_EVENT: {

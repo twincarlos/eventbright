@@ -1,7 +1,7 @@
 div#home {
     position: relative;
     top: 50px;
-    width: 1248px;
+    width: 1200px;
     margin: auto;
 }
 
@@ -26,7 +26,10 @@ div#home > div#event-gallery {
 
 div.event-widget {
     width: 280px;
-    height: 400px;
+    height: auto;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 div.event-widget > a > img {
@@ -46,3 +49,17 @@ p.event-name {
     font-weight: 600;
     font-size: 20px;
 }
+
+p.event-date {
+    color: #f05537;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+p.event-location, p.event-price {
+    color: #6f7287;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+/* #6f7287 */

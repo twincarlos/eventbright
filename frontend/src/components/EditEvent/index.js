@@ -66,7 +66,7 @@ function EditEvent({ event, setEditEvent }) {
                         <input placeholder='price' type='number' onChange={e => setPrice(e.target.value)} value={price}></input>
                         <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
                         <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
-                            <button>Create</button>
+                        <button>Edit</button>
                     </form>
                 </>
                     :

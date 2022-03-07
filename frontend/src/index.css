@@ -1,4 +1,10 @@
 /* TODO Add site wide styles */
+* {
+    /* 300, 400, 500, 600 */
+    font-family: proxima-nova, sans-serif;
+    color: #262626;
+}
+
 ul {
     list-style-type: none;
 }
