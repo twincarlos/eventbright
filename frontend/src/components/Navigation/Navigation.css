@@ -16,11 +16,44 @@ ul#nav > li {
     display: flex;
 }
 
+ul#nav > li > form {
+    background-color: #f8f7fa;
+    padding: 5px;
+}
+
+ul#nav > li > form > input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #9c9c9c;
+}
+
+ul#nav > li > form > button {
+    background-color: transparent;
+    border: none;
+}
+
+ul#nav > li > form > button > i {
+    color: #9c9c9c;
+}
+
+a#create-event {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+ul#nav > li > a > img {
+    width: 120px;
+}
+
 ul#nav > li > div#session-links {
     margin-left: 750px;
 }
 
 ul#nav > li > a#home-a {
+    display: flex;
+    align-items: center;
     margin-right: 20px;
 }
 

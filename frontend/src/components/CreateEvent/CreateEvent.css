@@ -1,10 +1,27 @@
 div#create-event {
     position: relative;
     top: 50px;
+    width: 800px;
+    margin: auto;
 }
 
 div#create-event > form {
     display: flex;
     flex-direction: column;
     width: 200px;
+}
+
+div.ticket-info {
+    display: flex;
+}
+
+div.ticket-info > input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+div.ticket-info > button {
+    background-color: transparent;
+    border: none;
 }

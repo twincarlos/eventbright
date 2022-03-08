@@ -15,6 +15,7 @@ function CreateEvent() {
     const today = year + '-' + month + '-' + day;
 
     const [name, setName] = useState('');
+    const [about, setAbout] = useState('');
     const [image, setImage] = useState('');
     const [venue, setVenue] = useState('');
     const [address, setAddress] = useState('');
@@ -29,11 +30,18 @@ function CreateEvent() {
     const [tickets, setTickets] = useState([]);
 
     const [error, setError] = useState(false);
+    const [ticketError, setTicketError] = useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length) {
+        let err = false;
+
+        for (let i = 0; i < tickets.length; i++) {
+            if (!tickets[i].name.length || !tickets[i].amount) err = true;
+        }
+
+        if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err) {
             setError(true);
         } else {
             setError(false);
@@ -41,6 +49,7 @@ function CreateEvent() {
             dispatch(createOneEvent({
                 hostId: sessionUser.id,
                 name,
+                // about,
                 image,
                 venue,
                 address,
@@ -53,6 +62,7 @@ function CreateEvent() {
             }));
 
             setName('');
+            setAbout('');
             setImage('');
             setVenue('');
             setAddress('');
@@ -65,21 +75,34 @@ function CreateEvent() {
 
     const handleTicket = e => {
         e.preventDefault();
-        const newTicket = {
-            idx: tickets.length,
-            name: ticketName,
-            price: ticketPrice,
-            amount: ticketAvailability
+
+        let error;
+
+        for (let i = 0; i < tickets.length; i++) {
+            if (!tickets[i].name.length || !tickets[i].amount) error = true;
         }
-        setTickets([...tickets, newTicket]);
-        setTicketName('');
-        setTicketPrice(0);
-        setTicketAvailability(0);
+
+        if (!ticketName.length || !ticketAvailability) error = true;
+
+        if (!error) {
+            setTicketError(false);
+            const newTicket = {
+                idx: tickets.length,
+                name: ticketName,
+                price: ticketPrice,
+                amount: ticketAvailability
+            }
+            setTickets([...tickets, newTicket]);
+            setTicketName('');
+            setTicketPrice(0);
+            setTicketAvailability(0);
+        } else {
+            setTicketError(true);
+        }
     }
 
     const removeTicket = (e, idx) => {
         e.preventDefault();
-        // const newTickets = tickets.map((ticket, i) => ticket.idx === idx ? null : { idx: i, name: ticket.name, price: ticket.price, amount: ticket.amount });
         const newTickets = (tickets.filter(ticket => ticket.idx !== idx)).map((ticket, i) => {
             return { idx: i, name: ticket.name, price: ticket.price, amount: ticket.amount };
          });
@@ -90,30 +113,47 @@ function CreateEvent() {
         <div id='create-event'>
             { error && <p>All fields are required!</p> }
             <form onSubmit={handleSubmit}>
-                <h1>Event Info</h1>
+                <h1><i className="fas fa-align-right"></i> Event Info</h1>
+                <label>Name of your event</label>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
-                <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
-                <input placeholder='venue' type='text' onChange={e => setVenue(e.target.value)} value={venue}></input>
-                <input placeholder='address' type='text' onChange={e => setAddress(e.target.value)} value={address}></input>
-                <input placeholder='city' type='text' onChange={e => setCity(e.target.value)} value={city}></input>
-                <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
+                <label>Tell us about your event</label>
+                <textarea placeholder='about' onChange={e => setAbout(e.target.value)} defaultValue={about}></textarea>
+                <label>What type of event is it?</label>
                 <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
+                <label>Add an image</label>
+                <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
+
+                <h1><i className="fas fa-map-marked-alt"></i> Location</h1>
+
+                <label>Name of venue</label>
+                <input placeholder='venue' type='text' onChange={e => setVenue(e.target.value)} value={venue}></input>
+                <label>Address</label>
+                <input placeholder='address' type='text' onChange={e => setAddress(e.target.value)} value={address}></input>
+                <label>City</label>
+                <input placeholder='city' type='text' onChange={e => setCity(e.target.value)} value={city}></input>
+                <label>State</label>
+                <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
+
+                <h1><i className="fas fa-calendar-alt"></i> Date</h1>
+                <label>Date</label>
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
 
-                <h1>Tickets</h1>
-                <button onClick={handleTicket}>+</button>
-                <input type='text' placeholder='ticket name' value={ticketName} onChange={e => setTicketName(e.target.value)}></input>
-                <input type='number' placeholder='ticket price' value={ticketPrice} onChange={e => setTicketPrice(e.target.value)}></input>
-                <input type='number' placeholder='ticket availability' value={ticketAvailability} onChange={e => setTicketAvailability(e.target.value)}></input>
+                <h1><i className="fas fa-ticket-alt"></i> Tickets</h1>
+                <div className='ticket-info'>
+                    <input className='ticket-name' type='text' placeholder='ticket name' value={ticketName} onChange={e => setTicketName(e.target.value)}></input>
+                    <input className='ticket-price' type='number' placeholder='ticket price' value={ticketPrice === 0 ? '' : ticketPrice} onChange={e => setTicketPrice(e.target.value)}></input>
+                    <input className='ticket-availability' type='number' placeholder='ticket availability' value={ticketAvailability === 0 ? '' : ticketAvailability} onChange={e => setTicketAvailability(e.target.value)}></input>
+                    <button onClick={handleTicket}><i className="fas fa-check"></i></button>
+                </div>
 
                 { tickets.length ?
                     tickets.map((ticket, idx) => {
-                        return (ticket ? (<span key={idx.toString()}>
-                            <input type='text' placeholder='ticket name' defaultValue={ticket.name}></input>
-                            <input type='number' placeholder='ticket price' defaultValue={ticket.price}></input>
-                            <input type='number' placeholder='ticket availability' defaultValue={ticket.amount}></input>
+                        return (ticket ? (<div key={idx.toString()} className='ticket-info'>
+                            <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: e.target.value, price: Number(myTicket.price), amount: Number(myTicket.amount) } : myTicket))}></input>
+                            <input type='number' placeholder='ticket price' defaultValue={ticket.price} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: myTicket.name, price: Number(e.target.value), amount: Number(myTicket.amount) } : myTicket))}></input>
+                            <input type='number' placeholder='ticket availability' defaultValue={ticket.amount} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: myTicket.name, price: Number(myTicket.price), amount: Number(e.target.value) } : myTicket))}></input>
                             <button onClick={(e) => removeTicket(e, idx)}>X</button>
-                        </span>) : null)
+                        </div>) : null)
                     }) : null }
 
                 <h1> </h1>

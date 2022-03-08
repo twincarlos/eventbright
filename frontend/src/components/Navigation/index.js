@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import * as sessionActions from '../../store/session';
+import logo from '../../assets/logo.png';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -18,7 +19,7 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
-        <NavLink to='/create-event'>+</NavLink>
+        <NavLink id='create-event' to='/create-event'><i className="fas fa-plus"></i>Create Event</NavLink>
         <ProfileButton user={sessionUser} />
       </>
     );
@@ -35,9 +36,9 @@ function Navigation({ isLoaded }){
   return (
     <ul id='nav'>
       <li>
-        <NavLink id='home-a' exact to="/">Home</NavLink>
+        <NavLink id='home-a' exact to="/"><img src={logo} alt=''></img></NavLink>
         <form>
-          <button>S</button>
+          <button><i className="fas fa-search"></i></button>
           <input type='text' placeholder='Search events'></input>
         </form>
         {isLoaded && sessionLinks}
