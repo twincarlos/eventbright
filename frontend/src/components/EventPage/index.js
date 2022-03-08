@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
 import { getAllTickets } from '../../store/ticket';
 import { Modal } from '../../context/Modal';
+import SeeTickets from '../TicketsModal/SeeTickets';
 
 import './EventPage.css';
 
@@ -11,6 +12,7 @@ function EventPage() {
     const dispatch = useDispatch();
     const event = useSelector(state => state.event.event?.event);
     const host = useSelector(state => state.event.event?.host);
+    const tickets = useSelector(state => state.ticket.ticketList);
     const eventId = useParams().id;
     const [showModal, setShowModal] = useState(false);
 
@@ -46,7 +48,7 @@ function EventPage() {
             {
                 showModal &&
                 <Modal onClose={() => setShowModal(false)}>
-                    <h1>GET TICKETS</h1>
+                    <SeeTickets event={event} tickets={tickets}/>
                 </Modal>
             }
         </div>
