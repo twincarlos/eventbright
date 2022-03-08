@@ -27,7 +27,13 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
     const handleEdit = e => {
         e.preventDefault();
 
-        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length) {
+        let err = false;
+
+        for (let i = 0; i < newTickets.length; i++) {
+            if (!newTickets[i].name.length || !newTickets[i].amount) err = true;
+        }
+
+        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || err || !newTickets.length) {
             setError(true);
         } else {
             setError(false);
@@ -73,6 +79,10 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
                 setEditEvent(false);
             }}>Delete</button>
             <button onClick={() => setEditEvent(null)}>Cancel</button>
+            <button onClick={e => {
+                e.preventDefault();
+                console.log(newTickets);
+            }}>Check</button>
 
             <h1>Edit Event Tickets</h1>
             <button onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}>+</button>
