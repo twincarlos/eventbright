@@ -21,4 +21,19 @@ router.get('/:userId', async (req, res) => {
     return res.json(orderList);
 });
 
+router.post('/', async (req, res) => {
+    const newOrder = await Order.create({ userId: req.body[0].userId, eventId: req.body[0].eventId });
+    await newOrder.save();
+
+    const orderInfo = [];
+
+    for (let i = 0; i < req.body.length; i++) {
+        const orderDetails = await OrderDetail.create({ orderId: newOrder.id, ticketId: req.body[i].ticketId, amount: req.body[i].amount });
+        await orderDetails.save();
+        orderInfo.push(orderDetails.dataValues);
+    }
+
+    return res.json({ orderId: newOrder.id, orderInfo });
+});
+
 module.exports = router;

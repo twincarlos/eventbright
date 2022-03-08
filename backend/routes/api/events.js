@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Event, Ticket, OrderDetail } = require('../../db/models');
+const { User, Event, Ticket, OrderDetail, Order } = require('../../db/models');
 
 const router = express.Router();
 
@@ -70,8 +70,6 @@ router.put('/', async (req, res) => {
     for (let i = 0; i < tickets.length; i++) {
         const ticket = await Ticket.findByPk(tickets[i].id);
 
-        let newTicket;
-
         if (tickets[i].delete) {
             const orderDetails = await OrderDetail.findAll({ where: { ticketId: tickets[i].id } });
             for (let k = 0; k < orderDetails.length; k++) {
@@ -94,6 +92,23 @@ router.put('/', async (req, res) => {
 
 router.delete('/', async (req, res) => {
     const deletedEvent = await Event.findByPk(req.body.id);
+    const tickets = await Ticket.findAll({ where: { eventId: req.body.id } });
+    const orders = await Order.findAll({ where: { eventId: req.body.id } });
+
+    for (let i = 0; i < tickets.length; i++) {
+        const orderDetails = await OrderDetail.findAll({ where: { ticketId: tickets[i].id } });
+
+        for (k = 0; k < orderDetails.length; k++) {
+            await orderDetails[k].destroy();
+        }
+
+        await tickets[i].destroy();
+    }
+
+    for (let i = 0; i < orders.length; i++) {
+        await orders[i].destroy();
+    }
+
     await deletedEvent.destroy();
     return res.json(deletedEvent);
 });

@@ -69,6 +69,7 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
             </form>
             <button onClick={() => {
                 dispatch(deleteOneEvent(event.id));
+                setRender(!render);
                 setEditEvent(false);
             }}>Delete</button>
             <button onClick={() => setEditEvent(null)}>Cancel</button>

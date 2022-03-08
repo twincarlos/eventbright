@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOneOrder } from '../../store/order';
 
 import './TicketsModal.css';
 
 function SeeTickets({ event, tickets }) {
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const date = (new Date(event.date)).toString().split(' ')[0] + ', ' + (new Date(event.date)).toString().split(' ')[1] + ' ' + (new Date(event.date)).toString().split(' ')[2];
 
@@ -11,6 +13,7 @@ function SeeTickets({ event, tickets }) {
 
     const handleCheckout = () => {
         console.log(order);
+        return dispatch(createOneOrder(order.map(myOrder => ({ eventId: event.id, ticketId: myOrder.ticketId, amount: myOrder.amount, userId: myOrder.userId }))));
     }
 
     return (
