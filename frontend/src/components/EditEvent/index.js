@@ -14,7 +14,6 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
     const [address, setAddress] = useState(event.address);
     const [city, setCity] = useState(event.city);
     const [state, setState] = useState(event.state);
-    const [price, setPrice] = useState(event.price);
     const [category, setCategory] = useState(event.category);
     const [date, setDate] = useState(event.date);
     const [error, setError] = useState(false);
@@ -60,37 +59,37 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
     return (
         <div id='edit-event'>
             {error && <p>All fields are required!</p>}
-            <h1>Edit Event</h1>
             <form onSubmit={handleEdit}>
+                <h1><i className="fas fa-align-right"></i> Event Info</h1>
+                <label>Edit name</label>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
-                <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
-                <input placeholder='venue' type='text' onChange={e => setVenue(e.target.value)} value={venue}></input>
-                <input placeholder='address' type='text' onChange={e => setAddress(e.target.value)} value={address}></input>
-                <input placeholder='city' type='text' onChange={e => setCity(e.target.value)} value={city}></input>
-                <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
-                <input placeholder='price' type='number' onChange={e => setPrice(e.target.value)} value={price}></input>
+                <label>Edit category</label>
                 <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
+                <label>Change image</label>
+                <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
+
+                <h1><i className="fas fa-map-marked-alt"></i> Location</h1>
+                <label>Edit venue name</label>
+                <input placeholder='venue' type='text' onChange={e => setVenue(e.target.value)} value={venue}></input>
+                <label>Edit venue address</label>
+                <input placeholder='address' type='text' onChange={e => setAddress(e.target.value)} value={address}></input>
+                <label>Edit venue city</label>
+                <input placeholder='city' type='text' onChange={e => setCity(e.target.value)} value={city}></input>
+                <label>Edit venue state</label>
+                <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
+
+                <h1><i className="fas fa-calendar-alt"></i> Date</h1>
+                <label>Change dates</label>
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
-                <button>Edit</button>
             </form>
-            <button onClick={() => {
-                dispatch(deleteOneEvent(event.id));
-                setRender(!render);
-                setEditEvent(false);
-            }}>Delete</button>
-            <button onClick={() => setEditEvent(null)}>Cancel</button>
-            <button onClick={e => {
-                e.preventDefault();
-                console.log(newTickets);
-            }}>Check</button>
 
             <h1>Edit Event Tickets</h1>
-            <button onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}>+</button>
+            <button id='add-edit-ticket' onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}><i className="fas fa-plus"></i></button>
             {
                 ticketError && (<p>You must have at least one ticket</p>)
             }
             {
-                newTickets.map(ticket => ticket.delete ? null : (<div key={ticket.id.toString()} className='edit-event-ticket'>
+                newTickets.map(ticket => ticket.delete ? null : (<div key={ticket.id.toString()} className='ticket-info'>
                     <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => {
                         setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: e.target.value, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount) } : newTicket));
                     }}></input>
@@ -105,9 +104,16 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
                         setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount), delete: true } : newTicket))
                         :
                         setTicketError(true);
-                    }}>X</button>
+                    }}><i className="fas fa-minus"></i></button>
                 </div>))
             }
+            <button onClick={handleEdit}>Submit</button>
+            <button onClick={() => {
+                dispatch(deleteOneEvent(event.id));
+                setRender(!render);
+                setEditEvent(false);
+            }}>Delete</button>
+            <button onClick={() => setEditEvent(null)}>Cancel</button>
         </div>
     );
 }

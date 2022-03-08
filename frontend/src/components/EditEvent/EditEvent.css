@@ -1,4 +1,18 @@
 div#edit-event {
     position: relative;
     top: 50px;
+    width: 800px;
+    margin: auto;
+}
+
+div#edit-event > form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+button#add-edit-ticket {
+    background-color: transparent;
+    border: none;
+    width: 100px;
 }
