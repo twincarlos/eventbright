@@ -37,10 +37,10 @@ function SeeTickets({ event, tickets }) {
                     </div>) : null)
                 }
                 {
-                    (order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num) > 0 ?
-                    <p>Total ${(order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num)}</p> : null
+                    ((order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num, 0) > 0 ?
+                    <p>Total ${(order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num, 0)}</p> : null)
                 }
-                <button onClick={handleCheckout} disabled={(order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num) === 0}>Checkout</button>
+                <button onClick={handleCheckout} disabled={(order.map(order => order.ticketPrice * order.amount)).reduce((acc, num) => acc + num, 0) === 0}>Checkout</button>
             </div>
         </div>
     );

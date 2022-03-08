@@ -43,7 +43,7 @@ module.exports = {
       },
       {
         name: 'VIP',
-        eventId: 3,
+        eventId: 2,
         price: 30.00,
         amount: 10,
         createdAt: new Date(),
@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         name: 'Premium',
-        eventId: 4,
+        eventId: 2,
         price: 50.00,
         amount: 10,
         createdAt: new Date(),
