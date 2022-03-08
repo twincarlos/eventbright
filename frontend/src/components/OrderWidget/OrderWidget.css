@@ -1,0 +1,18 @@
+div.order-widget {
+    background-color: #dbdbdb;
+    width: 700px;
+    height: 300px;
+    margin-bottom: 10px;
+
+    display: flex;
+}
+
+div.order-widget > img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+div.order-widget > div.order-details {
+    line-height: 10px;
+}

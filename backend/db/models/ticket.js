@@ -21,7 +21,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Ticket.associate = function(models) {
     // associations can be defined here
+    const join = {
+      through: 'OrderDetail',
+      foreignKey: 'ticketId',
+      otherKey: 'orderId'
+    }
+    Ticket.belongsToMany(models.Order, join);
     Ticket.belongsTo(models.Event, { foreignKey: 'eventId' });
+
   };
   return Ticket;
 };
