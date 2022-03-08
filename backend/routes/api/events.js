@@ -51,13 +51,38 @@ router.post('/', async (req, res) => {
 
 router.get('/users/:userId', async (req, res) => {
     const events = await Event.findAll({ where: { hostId: req.params.userId } });
-    return res.json(events);
+    const eventList = [];
+
+    for (let i = 0; i < events.length; i++) {
+        const event = events[i].dataValues;
+        const tickets = await Ticket.findAll({ where: { eventId: events[i].id } });
+        eventList.push({ event, tickets });
+    }
+    return res.json(eventList);
 });
 
 router.put('/', async (req, res) => {
+    const { tickets } = req.body;
     const editedEvent = await Event.findByPk(req.body.id);
     await editedEvent.update(req.body);
-    return res.json(editedEvent);
+    const newTickets = [];
+
+    for (let i = 0; i < tickets.length; i++) {
+        const ticket = await Ticket.findByPk(tickets[i].id);
+        let newTicket;
+        if (ticket) {
+            await ticket.update({ name: ticket.name, eventId: ticket.eventId, price: ticket.price, amount: ticket.amount });
+            await ticket.save();
+            newTickets.push(ticket.dataValues);
+        }
+        else {
+            newTicket = await newTicket.create({ name: ticket.name, eventId: ticket.eventId, price: ticket.price, amount: ticket.amount });
+            await newTicket.save();
+            newTickets.push(newTicket.dataValues);
+        }
+    }
+
+    return res.json({ editedEvent, newTickets });
 });
 
 router.delete('/', async (req, res) => {

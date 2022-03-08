@@ -12,10 +12,10 @@ const getTickets = ticketList => {
     }
 }
 
-const createTicket = newTicket => {
+const createTicket = newTickets => {
     return {
         type: CREATE_TICKET,
-        newTicket
+        newTickets
     }
 }
 
@@ -40,7 +40,7 @@ export const getAllTickets = eventId => async dispatch => {
     return ticketList;
 }
 
-export const createOneTicket = data => async dispatch => {
+export const createMoreTickets = data => async dispatch => {
     const response = await csrfFetch('/api/tickets', {
         method: 'POST',
         headers: {
@@ -49,9 +49,9 @@ export const createOneTicket = data => async dispatch => {
         body: JSON.stringify(data)
     });
 
-    const newTicket = await response.json();
-    dispatch(createTicket(newTicket));
-    return newTicket;
+    const newTickets = await response.json();
+    dispatch(createTicket(newTickets));
+    return newTickets;
 }
 
 export const editOneTicket = data => async dispatch => {
@@ -91,7 +91,7 @@ const ticketsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case CREATE_TICKET: {
-            state.ticketList = [action.newTicket, ...state.ticketList];
+            state.ticketList = [action.newTickets, ...state.ticketList];
             return { ...state };
         }
         case EDIT_TICKET: {

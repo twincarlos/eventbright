@@ -28,10 +28,10 @@ const createEvent = newEvent => {
     }
 }
 
-const getEventsByHost = eventList => {
+const getEventsByHost = eventListByHost => {
     return {
         type: GET_EVENTS_BY_HOST,
-        eventList
+        eventListByHost
     }
 }
 
@@ -82,9 +82,9 @@ export const createOneEvent = data => async dispatch => {
 
 export const getAllEventsByHost = userId => async dispatch => {
     const response = await csrfFetch(`/api/events/users/${userId}`);
-    const eventList = await response.json();
-    dispatch(getEventsByHost(eventList));
-    return eventList;
+    const eventListByHost = await response.json();
+    dispatch(getEventsByHost(eventListByHost));
+    return eventListByHost;
 }
 
 export const editOneEvent = data => async dispatch => {
@@ -132,11 +132,11 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case GET_EVENTS_BY_HOST: {
-            state.eventList = action.eventList;
+            state.eventListByHost = action.eventListByHost;
             return { ...state };
         }
         case EDIT_EVENT: {
-            state.eventList = state.eventList.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
+            state.eventListByHost = state.eventListByHost.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
             return { ...state };
         }
         case DELETE_EVENT: {
