@@ -48,7 +48,8 @@ function CreateEvent() {
                 state,
                 country: 'United States',
                 category,
-                date
+                date,
+                tickets
             }));
 
             setName('');
