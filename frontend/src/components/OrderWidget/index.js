@@ -14,7 +14,7 @@ function OrderWidget({ order }) {
                         <p>{myOrder.ticketName} x {myOrder.amount} (${myOrder.amount * myOrder.ticketPrice})</p>
                     </div>)
                 }
-                <p>Total: ${ (order.orderInfo.map(myOrder => myOrder.ticketPrice * myOrder.amount)).reduce((acc, num) => acc + num) }</p>
+                <p>Total: ${ (order.orderInfo.map(myOrder => myOrder.ticketPrice * myOrder.amount)).reduce((acc, num) => acc + num, 0) }</p>
             </div>
         </div>
     );

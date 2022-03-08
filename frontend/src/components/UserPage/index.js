@@ -18,6 +18,7 @@ function UserPage() {
     const orderList = useSelector(state => state.order.orderList);
     const [editEvent, setEditEvent] = useState(null);
     const [editTickets, setEditTickets] = useState(null);
+    const [render, setRender] = useState(false);
 
     const image = 'https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&w=1000&q=80';
 
@@ -25,7 +26,7 @@ function UserPage() {
         dispatch(getOneUser(userId));
         dispatch(getAllEventsByHost(userId));
         dispatch(getAllOrders(userId));
-    }, [dispatch, userId]);
+    }, [dispatch, userId, render]);
 
     if (!user || !eventList) return null;
 
@@ -33,7 +34,7 @@ function UserPage() {
         <div id='user-page'>
 
             {
-                editEvent ? <EditEvent event={editEvent} setEditEvent={setEditEvent} tickets={editTickets}/> :
+                editEvent ? <EditEvent event={editEvent} setEditEvent={setEditEvent} tickets={editTickets} render={render} setRender={setRender}/> :
                 <>
                     <div id='user-header'>
                         <img src={image} alt=''></img>

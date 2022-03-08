@@ -136,7 +136,7 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case EDIT_EVENT: {
-            state.eventListByHost = state.eventListByHost.map(event => event.id === action.editedEvent.id ? action.editedEvent : event);
+            state.eventListByHost = state.eventListByHost.map(event => event.event.id === action.editedEvent.event.id ? action.editedEvent : event);
             return { ...state };
         }
         case DELETE_EVENT: {

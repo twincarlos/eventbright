@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Event, Ticket } = require('../../db/models');
+const { User, Event, Ticket, OrderDetail } = require('../../db/models');
 
 const router = express.Router();
 
@@ -69,20 +69,27 @@ router.put('/', async (req, res) => {
 
     for (let i = 0; i < tickets.length; i++) {
         const ticket = await Ticket.findByPk(tickets[i].id);
+
         let newTicket;
-        if (ticket) {
-            await ticket.update({ name: ticket.name, eventId: ticket.eventId, price: ticket.price, amount: ticket.amount });
+
+        if (tickets[i].delete) {
+            const orderDetails = await OrderDetail.findAll({ where: { ticketId: tickets[i].id } });
+            for (let k = 0; k < orderDetails.length; k++) {
+                await orderDetails[k].destroy();
+            }
+            await ticket.destroy();
+        } else if (ticket) {
+            await ticket.update({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
             await ticket.save();
             newTickets.push(ticket.dataValues);
-        }
-        else {
-            newTicket = await newTicket.create({ name: ticket.name, eventId: ticket.eventId, price: ticket.price, amount: ticket.amount });
+        } else {
+            let newTicket = await Ticket.create({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
             await newTicket.save();
             newTickets.push(newTicket.dataValues);
         }
     }
 
-    return res.json({ editedEvent, newTickets });
+    return res.json({ event: editedEvent, tickets: newTickets });
 });
 
 router.delete('/', async (req, res) => {

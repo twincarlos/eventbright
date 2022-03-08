@@ -4,7 +4,7 @@ import { editOneEvent, deleteOneEvent } from '../../store/event';
 
 import './EditEvent.css';
 
-function EditEvent({ event, setEditEvent, tickets }) {
+function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
@@ -18,6 +18,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
     const [category, setCategory] = useState(event.category);
     const [date, setDate] = useState(event.date);
     const [error, setError] = useState(false);
+    const [ticketError, setTicketError] = useState(false);
 
     const [newTickets, setNewTickets] = useState(tickets);
 
@@ -40,20 +41,14 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 city: city,
                 state: state,
                 country: 'United States',
-                price: price,
-                rating: event.rating,
                 category: category,
                 date: date,
-                cancelled: false,
                 tickets: newTickets
             }));
 
+            setRender(!render);
             return setEditEvent(null);
         }
-    };
-
-    const handleTickets = () => {
-
     }
 
     return (
@@ -81,20 +76,27 @@ function EditEvent({ event, setEditEvent, tickets }) {
             <h1>Edit Event Tickets</h1>
             <button onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}>+</button>
             {
-                newTickets.map(ticket => <div key={ticket.id.toString()} className='edit-event-ticket'>
+                ticketError && (<p>You must have at least one ticket</p>)
+            }
+            {
+                newTickets.map(ticket => ticket.delete ? null : (<div key={ticket.id.toString()} className='edit-event-ticket'>
                     <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => {
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: e.target.value, eventId: newTicket.eventId, price: Number(newTicket.price), amount: newTicket.amount } : newTicket));
+                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: e.target.value, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount) } : newTicket));
                     }}></input>
                     <input type='number' placeholder='ticket price' defaultValue={ticket.price} onChange={e => {
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(e.target.value), amount: newTicket.amount } : newTicket));
+                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(e.target.value), amount: Number(newTicket.amount) } : newTicket));
                     }}></input>
                     <input type='number' placeholder='ticket availability' defaultValue={ticket.amount} onChange={e => {
                         setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: e.target.value } : newTicket));
                     }}></input>
-                    <button onClick={() => setNewTickets(newTickets.filter(newTicket => newTicket.id !== ticket.id))}>X</button>
-                </div>)
+                    <button onClick={() => {
+                        newTickets.filter(newTicket => !newTicket.delete).length > 1 ?
+                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount), delete: true } : newTicket))
+                        :
+                        setTicketError(true);
+                    }}>X</button>
+                </div>))
             }
-            <button onClick={handleTickets}>Submit</button>
         </div>
     );
 }
