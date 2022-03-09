@@ -9,15 +9,15 @@ router.get('/:userId', async (req, res) => {
 
     for (let i = 0; i < allOrders.length; i++) {
         const orderDetails = await OrderDetail.findAll({ where: { orderId: allOrders[i].id } });
-        const event = await Event.findByPk(allOrders[i].eventId);
-        const host  = await User.findByPk(event.hostId);
+        // const event = await Event.findByPk(allOrders[i].eventId);
+        // const host  = await User.findByPk(allOrders[i].hostId);
         const orderInfo = [];
 
         for (let k = 0; k < orderDetails.length; k++) {
             orderInfo.push(orderDetails[k].dataValues);
         }
 
-        orderList.push({ orderId: allOrders[i].id, event, host, orderInfo });
+        orderList.push({ order: allOrders[i].dataValues, orderInfo });
     }
     return res.json(orderList);
 });
@@ -37,6 +37,20 @@ router.post('/', async (req, res) => {
     }
 
     return res.json({ newOrder, event, host, orderInfo });
+});
+
+router.put('/', async (req, res) => {
+    const allOrders = await Order.findAll({ where: { eventId: req.body.eventId } });
+    const orders = [];
+
+    for (let i = 0; i < allOrders.length; i++) {
+        const order = allOrders[i];
+        await order.update({ eventName: req.body.eventName, eventDate: req.body.eventDate, eventImage: req.body.eventImage });
+        await order.save();
+        orders.push(order.dataValues);
+    }
+
+    return res.json(orders);
 });
 
 module.exports = router;
