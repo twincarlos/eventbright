@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editOneEvent, deleteOneEvent } from '../../store/event';
+import { editAllOrders } from '../../store/order';
 
 import './EditEvent.css';
 
-function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
+function EditEvent({ event, setEditEvent, tickets }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
@@ -36,6 +37,12 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
             setError(true);
         } else {
             setError(false);
+            dispatch(editAllOrders({
+                eventId: event.id,
+                eventName: name,
+                eventDate: date,
+                eventImage: image
+            }));
             dispatch(editOneEvent({
                 id: event.id,
                 hostId: sessionUser.id,
@@ -50,8 +57,6 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
                 date: date,
                 tickets: newTickets
             }));
-
-            setRender(!render);
             return setEditEvent(null);
         }
     }
@@ -110,7 +115,6 @@ function EditEvent({ event, setEditEvent, tickets, render, setRender }) {
             <button onClick={handleEdit}>Submit</button>
             <button onClick={() => {
                 dispatch(deleteOneEvent(event.id));
-                setRender(!render);
                 setEditEvent(false);
             }}>Delete</button>
             <button onClick={() => setEditEvent(null)}>Cancel</button>

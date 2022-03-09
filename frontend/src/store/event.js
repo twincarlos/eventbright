@@ -140,7 +140,7 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state };
         }
         case DELETE_EVENT: {
-            state.eventListByHost = state.eventListByHost.filter(event => event.id !== action.deletedEvent.id);
+            state.eventListByHost = state.eventListByHost.filter(event => event.event.id !== action.deletedEvent.id);
             return { ...state };
         }
         default:
