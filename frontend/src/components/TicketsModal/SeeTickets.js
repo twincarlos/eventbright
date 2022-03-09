@@ -12,8 +12,7 @@ function SeeTickets({ event, tickets }) {
     const [order, setOrder] = useState(tickets.map(ticket => ({ ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: 0 })));
 
     const handleCheckout = () => {
-        console.log(order);
-        return dispatch(createOneOrder(order.map(myOrder => ({ eventId: event.id, ticketId: myOrder.ticketId, amount: myOrder.amount, userId: myOrder.userId }))));
+        return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
     }
 
     return (

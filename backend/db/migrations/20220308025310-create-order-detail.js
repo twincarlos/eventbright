@@ -13,10 +13,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Orders' }
       },
-      ticketId: {
+      ticketName: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: { model: 'Tickets' }
+        type: Sequelize.STRING,
+      },
+      ticketPrice: {
+        allowNull: false,
+        type: Sequelize.DECIMAL,
       },
       amount: {
         allowNull: false,

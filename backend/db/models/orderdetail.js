@@ -6,10 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: { model: 'Orders' }
     },
-    ticketId: {
+    ticketName: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      references: { model: 'Tickets' }
+      type: DataTypes.STRING
+    },
+    ticketPrice: {
+      allowNull: false,
+      type: DataTypes.DECIMAL
     },
     amount: {
       allowNull: false,

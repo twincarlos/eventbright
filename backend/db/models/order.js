@@ -6,22 +6,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: { model: 'Users' }
     },
+    hostId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
     eventId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      references: { model: 'Events' }
+      type: DataTypes.INTEGER
+    },
+    eventName: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    eventDate: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    eventImage: {
+      allowNull: false,
+      type: DataTypes.STRING
     }
   }, {});
   Order.associate = function(models) {
     // associations can be defined here
-    const join = {
-      through: 'OrderDetail',
-      foreignKey: 'orderId',
-      otherKey: 'ticketId'
-    }
-    Order.belongsToMany(models.Ticket, join);
     Order.belongsTo(models.User, { foreignKey: 'userId' });
-    Order.belongsTo(models.Event, { foreignKey: 'eventId' });
   };
   return Order;
 };

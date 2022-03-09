@@ -10,7 +10,7 @@ function OrderWidget({ order }) {
                 <p>{date}</p>
                 <h1>{order.event.name}</h1>
                 {
-                    order.orderInfo.map(myOrder => <div key={myOrder.ticketId.toString()}>
+                    order.orderInfo.map(myOrder => <div key={myOrder.id.toString()}>
                         <p>{myOrder.ticketName} x {myOrder.amount} (${myOrder.amount * myOrder.ticketPrice})</p>
                     </div>)
                 }

@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
+    about: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
     image: {
       allowNull: false,
       type: DataTypes.STRING
@@ -47,7 +51,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Event.belongsTo(models.User, { foreignKey: 'hostId' });
     Event.hasMany(models.Ticket, { foreignKey: 'eventId' });
-    Event.hasMany(models.Order, { foreignKey: 'eventId' });
   };
   return Event;
 };
