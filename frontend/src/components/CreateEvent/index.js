@@ -119,8 +119,8 @@ function CreateEvent() {
 
     return (
         <div id='create-event'>
-            { error && <p>All fields are required!</p> }
             <form onSubmit={handleSubmit}>
+            { error && <p><i className="fas fa-exclamation-triangle"></i> All fields are required!</p> }
                 <h1><i className="fas fa-align-right"></i> Event Info</h1>
                 <label>Name of your event</label>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
@@ -157,11 +157,11 @@ function CreateEvent() {
 
                 { tickets.length ?
                     tickets.map((ticket, idx) => {
-                        return (ticket ? (<div key={idx.toString()} className='ticket-info'>
+                        return (ticket ? (<div key={idx.toString()} className='ticket-added'>
                             <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: e.target.value, price: Number(myTicket.price), amount: Number(myTicket.amount) } : myTicket))}></input>
                             <input type='number' placeholder='ticket price' defaultValue={ticket.price} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: myTicket.name, price: Number(e.target.value), amount: Number(myTicket.amount) } : myTicket))}></input>
                             <input type='number' placeholder='ticket availability' defaultValue={ticket.amount} onChange={e => setTickets(tickets.map(myTicket => myTicket.idx === idx ? { idx: myTicket.idx, name: myTicket.name, price: Number(myTicket.price), amount: Number(e.target.value) } : myTicket))}></input>
-                            <button onClick={(e) => removeTicket(e, idx)}>X</button>
+                            <button onClick={(e) => removeTicket(e, idx)}><i className="fas fa-backspace"></i></button>
                         </div>) : null)
                     }) : null }
 

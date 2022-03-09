@@ -65,8 +65,8 @@ function EditEvent({ event, setEditEvent, tickets }) {
 
     return (
         <div id='edit-event'>
-            {error && <p>All fields are required!</p>}
             <form onSubmit={handleEdit}>
+                {error && <p>All fields are required!</p>}
                 <h1><i className="fas fa-align-right"></i> Event Info</h1>
                 <label>Edit name</label>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
@@ -88,38 +88,40 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 <h1><i className="fas fa-calendar-alt"></i> Date</h1>
                 <label>Change dates</label>
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
-            </form>
 
-            <h1>Edit Event Tickets</h1>
-            <button id='add-edit-ticket' onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}><i className="fas fa-plus"></i></button>
-            {
-                ticketError && (<p>You must have at least one ticket</p>)
-            }
-            {
-                newTickets.map(ticket => ticket.delete ? null : (<div key={ticket.id.toString()} className='ticket-info'>
-                    <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => {
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: e.target.value, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount) } : newTicket));
-                    }}></input>
-                    <input type='number' placeholder='ticket price' defaultValue={ticket.price} onChange={e => {
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(e.target.value), amount: Number(newTicket.amount) } : newTicket));
-                    }}></input>
-                    <input type='number' placeholder='ticket availability' defaultValue={ticket.amount} onChange={e => {
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: e.target.value } : newTicket));
-                    }}></input>
-                    <button onClick={() => {
-                        newTickets.filter(newTicket => !newTicket.delete).length > 1 ?
-                        setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount), delete: true } : newTicket))
-                        :
-                        setTicketError(true);
-                    }}><i className="fas fa-minus"></i></button>
-                </div>))
-            }
-            <button onClick={handleEdit}>Submit</button>
-            <button onClick={() => {
-                dispatch(deleteOneEvent(event.id));
-                setEditEvent(false);
-            }}>Delete</button>
-            <button onClick={() => setEditEvent(null)}>Cancel</button>
+                <h1><i className="fas fa-ticket-alt"></i> Edit Event Tickets</h1>
+                <button id='add-edit-ticket' onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}><i className="fas fa-plus"></i> Add ticket</button>
+                {
+                    ticketError && (<p>You must have at least one ticket</p>)
+                }
+                {
+                    newTickets.map(ticket => ticket.delete ? null : (<div key={ticket.id.toString()} className='ticket-info'>
+                        <input type='text' placeholder='ticket name' defaultValue={ticket.name} onChange={e => {
+                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: e.target.value, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount) } : newTicket));
+                        }}></input>
+                        <input type='number' placeholder='ticket price' defaultValue={ticket.price === 0 ? '' : ticket.price} onChange={e => {
+                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(e.target.value), amount: Number(newTicket.amount) } : newTicket));
+                        }}></input>
+                        <input type='number' placeholder='ticket availability' defaultValue={ticket.amount === 0 ? '' : ticket.amount} onChange={e => {
+                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: e.target.value } : newTicket));
+                        }}></input>
+                        <button onClick={() => {
+                            newTickets.filter(newTicket => !newTicket.delete).length > 1 ?
+                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount), delete: true } : newTicket))
+                            :
+                            setTicketError(true);
+                        }}><i className="fas fa-minus"></i></button>
+                    </div>))
+                }
+                <div id='save-buttons'>
+                    <button id='save-button' onClick={handleEdit}><i className="fas fa-save"></i> Save</button>
+                    <button id='delete-button' onClick={() => {
+                        dispatch(deleteOneEvent(event.id));
+                        setEditEvent(false);
+                    }}><i className="fas fa-trash-alt"></i> Delete</button>
+                    <button id='cancel-button' onClick={() => setEditEvent(null)}>Cancel</button>
+                </div>
+            </form>
         </div>
     );
 }
