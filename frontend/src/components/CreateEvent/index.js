@@ -11,11 +11,12 @@ function CreateEvent() {
     const sessionUser = useSelector(state => state.session.user);
     const newEvent = useSelector(state => state.event.newEvent);
 
-    const now = new Date(Date.now());
+    const now = new Date(86400000 + Date.now());
     const year = now.getFullYear().toString();
     const month = (now.getMonth() + 1).toString().length > 1 ? (now.getMonth() + 1).toString() : `0${(now.getMonth() + 1).toString()}`;
     const day = now.getDate().toString().length > 1 ? now.getDate().toString() : `0${now.getDate().toString()}`;
     const today = year + '-' + month + '-' + day;
+
 
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
@@ -48,7 +49,7 @@ function CreateEvent() {
             if (!tickets[i].name.length || !tickets[i].amount) err = true;
         }
 
-        if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err) {
+        if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err || ((new Date(date)).getTime() <= Date.now())) {
             setError(true);
         } else {
             setError(false);
@@ -142,6 +143,7 @@ function CreateEvent() {
                 <input placeholder='state' type='text' onChange={e => setState(e.target.value)} value={state}></input>
 
                 <h1><i className="fas fa-calendar-alt"></i> Date</h1>
+                { ((new Date(date)).getTime() <= Date.now()) && (<p>Date must be in the future</p>) }
                 <label>Date</label>
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
 
