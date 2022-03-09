@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createOneEvent } from '../../store/event';
 
 import './CreateEvent.css';
 
 function CreateEvent() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const newEvent = useSelector(state => state.event.newEvent);
 
     const now = new Date(Date.now());
     const year = now.getFullYear().toString();
@@ -31,6 +34,10 @@ function CreateEvent() {
 
     const [error, setError] = useState(false);
     const [ticketError, setTicketError] = useState(false);
+
+    useEffect(() => {
+        if (newEvent) history.push(`/events/${newEvent.id}`);
+    }, [dispatch, newEvent, history]);
 
     const handleSubmit = e => {
         e.preventDefault();
