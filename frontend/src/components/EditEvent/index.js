@@ -10,6 +10,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
     const sessionUser = useSelector(state => state.session.user);
 
     const [name, setName] = useState(event.name);
+    const [about, setAbout] = useState(event.about);
     const [image, setImage] = useState(event.image);
     const [venue, setVenue] = useState(event.venue);
     const [address, setAddress] = useState(event.address);
@@ -46,15 +47,16 @@ function EditEvent({ event, setEditEvent, tickets }) {
             dispatch(editOneEvent({
                 id: event.id,
                 hostId: sessionUser.id,
-                name: name,
-                image: image,
-                venue: venue,
-                address: address,
-                city: city,
-                state: state,
+                name,
+                about,
+                image,
+                venue,
+                address,
+                city,
+                state,
                 country: 'United States',
-                category: category,
-                date: date,
+                category,
+                date,
                 tickets: newTickets
             }));
             return setEditEvent(null);

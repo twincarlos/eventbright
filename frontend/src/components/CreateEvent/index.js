@@ -49,7 +49,7 @@ function CreateEvent() {
             dispatch(createOneEvent({
                 hostId: sessionUser.id,
                 name,
-                // about,
+                about,
                 image,
                 venue,
                 address,

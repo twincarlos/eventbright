@@ -33,8 +33,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { hostId, name, image, venue, address, city, state, country, category, date, tickets } = req.body;
-    const newEvent = await Event.create({ hostId, name, image, venue, address, city, state, country, category, date });
+    const { hostId, name, about, image, venue, address, city, state, country, category, date, tickets } = req.body;
+    const newEvent = await Event.create({ hostId, name, about, image, venue, address, city, state, country, category, date });
     await newEvent.save();
     for (let i = 0; i < tickets.length; i++) {
         const newTicket = await Ticket.create({
