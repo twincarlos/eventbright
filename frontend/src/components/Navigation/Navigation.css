@@ -3,7 +3,7 @@ ul#nav {
     width: 100%;
     left: 0;
     top: -16px;
-    height: 50px;
+    height: 65px;
 
     display: flex;
     justify-content: center;
@@ -19,6 +19,9 @@ ul#nav > li {
 ul#nav > li > form {
     background-color: #f8f7fa;
     padding: 5px;
+    position: absolute;
+    top: 15px;
+    left: 200px;
 }
 
 ul#nav > li > form > input {
@@ -41,9 +44,26 @@ a#create-event {
     display: flex;
     flex-direction: column;
     text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    position: absolute;
+    right: 160px;
+    top: 15px;
+    color: rgb(0, 132, 255);
+    font-weight: 300;
 }
 
-ul#nav > li > a > img {
+a#create-event > i {
+    color: rgb(0, 132, 255);
+}
+
+ul#nav > li > a#home-a {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+ul#nav > li > a#home-a > img {
     width: 120px;
 }
 
@@ -60,4 +80,64 @@ ul#nav > li > a#home-a {
 ul#nav > li > div#session-links > a#signup-a {
     margin-left: 20px;
     margin-right: 20px;
+}
+
+div#profile-button {
+    width: 50px;
+    height: 40px;
+    border: 1px solid #dbdbdb;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    cursor: pointer;
+}
+
+div#profile-button > img#user-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* DROPDOWN */
+
+ul.profile-dropdown {
+    background-color: #eeeeee;
+    position: absolute;
+    top: 55px;
+    right: 60px;
+    border-radius: 10px;
+    text-align: right;
+    padding: 10px;
+    width: 150px;
+    font-weight: 300;
+    line-height: 30px;
+    box-shadow: 1px 1px 5px #dbdbdb;
+}
+
+ul.profile-dropdown > li {
+    transition: font-weight;
+}
+
+ul.profile-dropdown > li:hover {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+ul.profile-dropdown > li > button {
+    background-color: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 300;
+    transition: font-weight;
+}
+
+ul.profile-dropdown > li > button:hover {
+    font-weight: 600;
 }

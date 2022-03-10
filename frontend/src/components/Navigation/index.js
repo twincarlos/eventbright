@@ -38,7 +38,7 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink id='home-a' exact to="/"><img src={logo} alt=''></img></NavLink>
         <form>
-          <button><i className="fas fa-search"></i></button>
+          <button onClick={e => e.preventDefault()}><i className="fas fa-search"></i></button>
           <input type='text' placeholder='Search events'></input>
         </form>
         {isLoaded && sessionLinks}
