@@ -1,6 +1,7 @@
 div#user-page {
     position: relative;
     top: 50px;
+    margin-bottom: 150px;
 }
 
 div#user-page > div#user-header > img {
