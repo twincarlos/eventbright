@@ -14,14 +14,13 @@ function EventPage() {
     const sessionUser = useSelector(state => state.session?.user);
     const event = useSelector(state => state.event.event?.event);
     const host = useSelector(state => state.event.event?.host);
-    const tickets = useSelector(state => state.ticket.ticketList);
+    const tickets = useSelector(state => state.event.event?.tickets);
     const eventId = useParams().id;
     const [showModal, setShowModal] = useState(false);
     const [editEvent, setEditEvent] = useState(false);
 
     useEffect(() => {
         dispatch(getOneEvent(eventId));
-        dispatch(getAllTickets(eventId));
     }, [dispatch, eventId]);
 
     if (!event || !host) return null;
