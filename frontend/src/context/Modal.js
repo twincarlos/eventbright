@@ -7,6 +7,7 @@ const ModalContext = React.createContext();
 export function ModalProvider({ children }) {
   const modalRef = useRef();
   const [value, setValue] = useState();
+  const [tab, setTab] = useState('Events');
 
   useEffect(() => {
     setValue(modalRef.current);
@@ -14,7 +15,7 @@ export function ModalProvider({ children }) {
 
   return (
     <>
-      <ModalContext.Provider value={value}>
+      <ModalContext.Provider value={value, tab, setTab}>
         {children}
       </ModalContext.Provider>
       <div ref={modalRef} />

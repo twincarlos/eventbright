@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import { GlobalContext } from '../../context/GlobalContext';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const [showMenu, setShowMenu] = useState(false);
+  const { setTab } = useContext(GlobalContext);
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
   };
-  
+
   const closeMenu = () => {
     setShowMenu(false);
   };
@@ -40,10 +42,10 @@ function ProfileButton({ user }) {
       {showMenu && (
         <ul className="profile-dropdown" onMouseLeave={closeMenu}>
           <li><NavLink to={`/users/${user.id}`}>{user.username}</NavLink></li>
-          <li>Events</li>
-          <li>Tickets</li>
-          <li>Likes</li>
-          <li>Interests</li>
+          <li onClick={() => setTab('Events')}><NavLink to={`/users/${user.id}`}>Events</NavLink></li>
+          <li onClick={() => setTab('Tickets')}><NavLink to={`/users/${user.id}`}>Tickets</NavLink></li>
+          <li onClick={() => setTab('Likes')}><NavLink to={`/users/${user.id}`}>Likes</NavLink></li>
+          <li onClick={() => setTab('Interests')}><NavLink to={`/users/${user.id}`}>Interests</NavLink></li>
           <li>
             <button onClick={logout}><i className="fas fa-sign-out-alt"></i> Log Out</button>
           </li>

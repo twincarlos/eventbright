@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { getAllEventsByHost } from '../../store/event';
 import { getAllOrders } from '../../store/order';
 import EditEvent from '../EditEvent';
 import OrderWidget from '../OrderWidget';
+import { GlobalContext } from '../../context/GlobalContext';
 
 import './UserPage.css';
 
@@ -19,7 +20,7 @@ function UserPage() {
     const orderList = useSelector(state => state.order.orderList);
     const [editEvent, setEditEvent] = useState(null);
     const [editTickets, setEditTickets] = useState(null);
-    const [selected, setSelected] = useState('Events');
+    const { tab, setTab } = useContext(GlobalContext);
 
     const image = 'https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&w=1000&q=80';
 
@@ -44,11 +45,11 @@ function UserPage() {
                         </div>
                     </div>
                     <ul>
-                        <li id={selected === 'Events' ? 'selected' : null} onClick={() => setSelected('Events')}>Events</li>
-                        <li id={selected === 'Tickets' ? 'selected' : null} onClick={() => setSelected('Tickets')}>Tickets</li>
-                        <li id={selected === 'Likes' ? 'selected' : null} onClick={() => setSelected('Likes')}>Likes</li>
+                        <li id={tab === 'Events' ? 'selected' : null} onClick={() => setTab('Events')}>Events</li>
+                        <li id={tab === 'Tickets' ? 'selected' : null} onClick={() => setTab('Tickets')}>Tickets</li>
+                        <li id={tab === 'Likes' ? 'selected' : null} onClick={() => setTab('Likes')}>Likes</li>
                     </ul>
-                    { selected === 'Events' && (<div id='user-event-gallery'>
+                    { tab === 'Events' && (<div id='user-event-gallery'>
                         {
                             sessionUser?.id.toString() === userId.toString() ?
                             eventList?.map(event =>
@@ -79,7 +80,7 @@ function UserPage() {
                                 </div>)
                         }
                     </div>)}
-                    { selected === 'Tickets' && (<div id='user-order-gallery'>
+                    { tab === 'Tickets' && (<div id='user-order-gallery'>
                         { orderList?.map(order => <OrderWidget key={order.order.id.toString()} order={order}/>) }
                     </div>)}
                 </>

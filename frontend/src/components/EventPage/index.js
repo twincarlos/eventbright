@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
-import { getAllTickets } from '../../store/ticket';
 import { Modal } from '../../context/Modal';
 import SeeTickets from '../TicketsModal/SeeTickets';
 import EditEvent from '../EditEvent';
