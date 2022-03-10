@@ -109,7 +109,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
                             setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(e.target.value), amount: Number(newTicket.amount) } : newTicket));
                         }}></input>
                         <input type='number' placeholder='ticket availability' defaultValue={ticket.amount === 0 ? '' : ticket.amount} onChange={e => {
-                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: e.target.value } : newTicket));
+                            setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(e.target.value) } : newTicket));
                         }}></input>
                         <button onClick={() => {
                             newTickets.filter(newTicket => !newTicket.delete).length > 1 ?

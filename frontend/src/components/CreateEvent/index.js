@@ -150,8 +150,8 @@ function CreateEvent() {
                 <h1><i className="fas fa-ticket-alt"></i> Tickets</h1>
                 <div className='ticket-info'>
                     <input className='ticket-name' type='text' placeholder='ticket name' value={ticketName} onChange={e => setTicketName(e.target.value)}></input>
-                    <input className='ticket-price' type='number' placeholder='ticket price' value={ticketPrice === 0 ? '' : ticketPrice} onChange={e => setTicketPrice(e.target.value)}></input>
-                    <input className='ticket-availability' type='number' placeholder='ticket availability' value={ticketAvailability === 0 ? '' : ticketAvailability} onChange={e => setTicketAvailability(e.target.value)}></input>
+                    <input className='ticket-price' type='number' placeholder='ticket price' value={ticketPrice === 0 ? '' : ticketPrice} onChange={e => setTicketPrice(Number(e.target.value))}></input>
+                    <input className='ticket-availability' type='number' placeholder='ticket availability' value={ticketAvailability === 0 ? '' : ticketAvailability} onChange={e => setTicketAvailability(Number(e.target.value))}></input>
                     <button onClick={handleTicket}><i className="fas fa-check"></i></button>
                 </div>
 
