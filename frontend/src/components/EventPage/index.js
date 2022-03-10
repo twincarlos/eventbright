@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
 import { Modal } from '../../context/Modal';
+import { getAllMyLikedEvents, likeOneEvent, dislikeOneEvent } from '../../store/event';
 import SeeTickets from '../TicketsModal/SeeTickets';
 import EditEvent from '../EditEvent';
 
@@ -14,12 +15,14 @@ function EventPage() {
     const event = useSelector(state => state.event.event?.event);
     const host = useSelector(state => state.event.event?.host);
     const tickets = useSelector(state => state.event.event?.tickets);
+    const myLikedEvents = useSelector(state => state.event.myLikedEvents);
     const eventId = useParams().id;
     const [showModal, setShowModal] = useState(false);
     const [editEvent, setEditEvent] = useState(false);
 
     useEffect(() => {
         dispatch(getOneEvent(eventId));
+        dispatch(getAllMyLikedEvents(sessionUser.id));
     }, [dispatch, eventId]);
 
     if (!event || !host) return null;
@@ -47,7 +50,12 @@ function EventPage() {
                     </div>
                     <div id='event-interaction'>
                         <i id='share' className="fas fa-share-alt"></i>
-                        <i className="far fa-heart"></i>
+                        {
+                            myLikedEvents?.find(myLikedEvent => myLikedEvent.id === event?.id) ?
+                            <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
+                                :
+                            <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
+                        }
                         <button onClick={() => setShowModal(true)}>Tickets</button>
                     </div>
                     <div id='event-info'>
