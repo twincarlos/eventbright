@@ -30,9 +30,11 @@ router.post('/', async (req, res) => {
         const orderDetails = await OrderDetail.create({ orderId: newOrder.id, ticketName: req.body.orderDetails[i].ticketName, ticketPrice: req.body.orderDetails[i].ticketPrice, amount: req.body.orderDetails[i].amount });
         await orderDetails.save();
         orderInfo.push(orderDetails.dataValues);
-    }
 
-    console.log(newOrder, orderInfo);
+        const editTicketAmount = await Ticket.findByPk(req.body.orderDetails[i].ticketId);
+        await editTicketAmount.update({ amount: editTicketAmount.amount - req.body.orderDetails[i].amount });
+        await editTicketAmount.save();
+    }
 
     return res.json({ order: newOrder, orderInfo });
 });

@@ -19,7 +19,7 @@ function SeeTickets({ event, tickets }) {
     const handleCheckout = () => {
         setTab('Tickets');
         history.push(`/users/${sessionUser.id}`);
-        return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
+        return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketId: myOrder.ticketId, ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
     }
 
     return (
@@ -31,9 +31,16 @@ function SeeTickets({ event, tickets }) {
                 </div>
                 <div id='tickets-container'>
                     { tickets.map(ticket => (
-                        <div className='ticket' key={ticket.id.toString()}>
+                        <div className={`ticket ${!ticket.amount ? 'sold-out' : null}`} key={ticket.id.toString()}>
                             <div className='ticket-text'><p className='ticket-name'>{ticket.name}</p><p className='ticket-price'>${ticket.price}</p></div>
-                            <div className='ticket-availability'><select onChange={e => setOrder(order.map(order => order.ticketId === ticket.id ? { ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: Number(e.target.value) } : order))}>{((new Array(ticket.amount + 1)).fill(0)).map((num, idx) => <option key={idx.toString()} value={idx}>{idx}</option>)}</select></div>
+                            <div className='ticket-availability'>
+                                {
+                                    !ticket.amount ? <p>Sold out</p> :
+                                        <select onChange={e => setOrder(order.map(order => order.ticketId === ticket.id ? { ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: Number(e.target.value) } : order))}>{((new Array(ticket.amount + 1)).fill(0)).map((num, idx) =>
+                                            <option key={idx.toString()} value={idx}>{idx}</option>)}
+                                        </select>
+                                }
+                            </div>
                         </div>
                     )) }
                 </div>

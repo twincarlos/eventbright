@@ -40,6 +40,10 @@ div#see-tickets > div#ticket-list-left > div#tickets-container > div.ticket {
     line-height: 0;
 }
 
+div#see-tickets > div#ticket-list-left > div#tickets-container > div.ticket.sold-out > div > p {
+    color: #dbdbdb;
+}
+
 div#see-tickets > div#ticket-list-left > div#tickets-container > div.ticket > div.ticket-text > p.ticket-name {
     font-size: 20px;
     font-weight: 600;
