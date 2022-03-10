@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEvents } from '../../store/event';
+import { getAllEvents, getAllLikedEvents } from '../../store/event';
 import EventWidget from './EventWidget';
 
 import './Home.css';
@@ -11,13 +11,15 @@ function Home() {
     const [input, setInput] = useState('');
     const [location, setLocation] = useState('Any');
 
+    const sessionUser = useSelector(state => state.session.user);
     const eventList = useSelector(state => state.event.eventList);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getAllEvents({ location, category }));
-    }, [dispatch, location, category]);
+        dispatch(getAllLikedEvents({ userId: sessionUser.id }));
+    }, [dispatch, location, category, sessionUser.id]);
 
     if (!eventList) return null;
 
@@ -39,7 +41,7 @@ function Home() {
                 { categories.map((category, idx) => <li key={idx.toString()} onClick={() => setCategory(category)}>{category}</li>) }
             </ul>
             <div id='event-gallery'>
-                { eventList.map(event => <EventWidget key={event.id.toString()} event={event}/>) }
+                { eventList.map(event => <EventWidget key={event.event.id.toString()} event={event}/>) }
             </div>
         </div>
     );

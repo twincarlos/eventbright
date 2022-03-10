@@ -6,6 +6,9 @@ const CREATE_EVENT = 'events/createEvent';
 const GET_EVENTS_BY_HOST = 'events/getEventsByHost';
 const EDIT_EVENT = 'events/editEvent';
 const DELETE_EVENT = 'events/deleteEvent';
+const GET_LIKED_EVENTS = 'events/getLikedEvents';
+const LIKE_EVENT = 'events/likeEvent';
+const DISLIKE_EVENT = 'events/dislikeEvent';
 
 const getEvents = eventList => {
     return {
@@ -46,6 +49,27 @@ const deleteEvent = deletedEvent => {
     return {
         type: DELETE_EVENT,
         deletedEvent
+    }
+}
+
+const getLikedEvents = likedEvents => {
+    return {
+        type: GET_LIKED_EVENTS,
+        likedEvents
+    }
+}
+
+const likeEvent = newLike => {
+    return {
+        type: LIKE_EVENT,
+        newLike
+    }
+}
+
+const dislikeEvent = newDislike => {
+    return {
+        type: DISLIKE_EVENT,
+        newDislike
     }
 }
 
@@ -115,6 +139,42 @@ export const deleteOneEvent = id => async dispatch => {
     return deletedEvent;
 }
 
+export const getAllLikedEvents = data => async dispatch => {
+    const { userId } = data;
+    const response = await csrfFetch(`/api/likes/${userId}`);
+    const likedEvents = await response.json();
+    dispatch(getLikedEvents(likedEvents));
+    return likedEvents;
+}
+
+export const likeOneEvent = data => async dispatch => {
+    const response = await csrfFetch('/api/likes', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const newLike = await response.json();
+    dispatch(likeEvent(newLike));
+    return newLike;
+}
+
+export const dislikeOneEvent = data => async dispatch => {
+    const response = await csrfFetch('/api/likes', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const newDislike = await response.json();
+    dispatch(dislikeEvent(newDislike));
+    return newDislike;
+}
+
 const initialState = {};
 
 const eventsReducer = (state = initialState, action) => {
@@ -142,6 +202,18 @@ const eventsReducer = (state = initialState, action) => {
         }
         case DELETE_EVENT: {
             state.eventListByHost = state.eventListByHost.filter(event => event.event.id !== action.deletedEvent.id);
+            return { ...state };
+        }
+        case GET_LIKED_EVENTS: {
+            state.likedEvents = action.likedEvents;
+            return { ...state };
+        }
+        case LIKE_EVENT: {
+            state.likedEvents = [action.newLike, ...state.likedEvents];
+            return { ...state };
+        }
+        case DISLIKE_EVENT: {
+            state.likedEvents = state.likedEvents.filter(likedEvent => likedEvent.id !== action.newDislike.id);
             return { ...state };
         }
         default:

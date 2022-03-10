@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Event, Ticket, OrderDetail, Order } = require('../../db/models');
+const { User, Event, Ticket, Order } = require('../../db/models');
 
 const router = express.Router();
 
@@ -9,19 +9,52 @@ router.get('/search/:location/:category', async (req, res) => {
 
     if (location !== 'Any' && category === 'Any') {
         const eventList = await Event.findAll({ where: { city: location } });
-        return res.json(eventList);
+        const events = [];
+
+        for (let i = 0; i < eventList.length; i++) {
+            const event = await Event.findByPk(eventList[i].id);
+            const host = await User.findByPk(eventList[i].hostId);
+            const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
+            events.push({ event: event.dataValues, host: host.dataValues, tickets });
+        }
+        return res.json(events);
     }
     else if (location === 'Any' && category !== 'Any') {
         const eventList = await Event.findAll({ where: { category } });
-        return res.json(eventList);
+        const events = [];
+
+        for (let i = 0; i < eventList.length; i++) {
+            const event = await Event.findByPk(eventList[i].id);
+            const host = await User.findByPk(eventList[i].hostId);
+            const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
+            events.push({ event: event.dataValues, host: host.dataValues, tickets });
+        }
+        return res.json(events);
     }
     else if (location !== 'Any' && category !== 'Any') {
         const eventList = await Event.findAll({ where: [{ city: location }, { category }] });
-        return res.json(eventList);
+        const events = [];
+
+        for (let i = 0; i < eventList.length; i++) {
+            const event = await Event.findByPk(eventList[i].id);
+            const host = await User.findByPk(eventList[i].hostId);
+            const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
+            events.push({ event: event.dataValues, host: host.dataValues, tickets });
+        }
+        return res.json(events);
     }
     else {
         const eventList = await Event.findAll();
-        return res.json(eventList);
+        const events = [];
+
+        for (let i = 0; i < eventList.length; i++) {
+            const event = await Event.findByPk(eventList[i].id);
+            const host = await User.findByPk(eventList[i].hostId);
+            const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
+            events.push({ event: event.dataValues, host: host.dataValues, tickets });
+        }
+
+        return res.json(events);
     }
 });
 

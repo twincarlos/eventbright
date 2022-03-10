@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import event from './event';
 import user from './user';
-import ticket from './ticket';
 import order from './order';
 
 let enhancer;
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   event,
   user,
-  ticket,
   order
 });
 
