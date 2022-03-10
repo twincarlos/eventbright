@@ -70,6 +70,8 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 <h1><i className="fas fa-align-right"></i> Event Info</h1>
                 <label>Edit name</label>
                 <input placeholder='name' type='text' onChange={e => setName(e.target.value)} value={name}></input>
+                <label>Edit about</label>
+                <textarea placeholder='about' onChange={e => setAbout(e.target.value)} defaultValue={about}></textarea>
                 <label>Edit category</label>
                 <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
                 <label>Change image</label>
@@ -115,11 +117,16 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 }
                 <div id='save-buttons'>
                     <button id='save-button' onClick={handleEdit}><i className="fas fa-save"></i> Save</button>
-                    <button id='delete-button' onClick={() => {
+                    <button id='delete-button' onClick={e => {
+                        e.preventDefault();
                         dispatch(deleteOneEvent(event.id));
                         setEditEvent(false);
                     }}><i className="fas fa-trash-alt"></i> Delete</button>
-                    <button id='cancel-button' onClick={() => setEditEvent(null)}>Cancel</button>
+                    <button id='cancel-button' onClick={e => {
+                        e.preventDefault();
+                        setEditEvent(null);
+                    }
+                    }>Cancel</button>
                 </div>
             </form>
         </div>

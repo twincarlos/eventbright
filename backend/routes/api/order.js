@@ -25,8 +25,6 @@ router.get('/:userId', async (req, res) => {
 router.post('/', async (req, res) => {
     const newOrder = await Order.create({ userId: req.body.order.userId, hostId: req.body.order.hostId, eventId: req.body.order.eventId, eventName: req.body.order.eventName, eventDate: req.body.order.eventDate, eventImage: req.body.order.eventImage });
     await newOrder.save();
-    const event = await Event.findByPk(req.body.order.eventId);
-    const host = await User.findByPk(req.body.order.hostId);
 
     const orderInfo = [];
 
@@ -36,7 +34,7 @@ router.post('/', async (req, res) => {
         orderInfo.push(orderDetails.dataValues);
     }
 
-    return res.json({ newOrder, event, host, orderInfo });
+    return res.json({ order: newOrder, orderInfo });
 });
 
 router.put('/', async (req, res) => {
