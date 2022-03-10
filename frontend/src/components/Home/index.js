@@ -18,8 +18,8 @@ function Home() {
 
     useEffect(() => {
         dispatch(getAllEvents({ location, category }));
-        dispatch(getAllMyLikedEvents(sessionUser.id));
-    }, [dispatch, location, category, sessionUser.id]);
+        if (sessionUser) dispatch(getAllMyLikedEvents(sessionUser.id));
+    }, [dispatch, location, category, sessionUser?.id, sessionUser]);
 
     if (!eventList) return null;
 

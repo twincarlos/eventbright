@@ -12,14 +12,18 @@ function SeeTickets({ event, tickets }) {
     const sessionUser = useSelector(state => state.session.user);
     const date = (new Date(event.date)).toString().split(' ')[0] + ', ' + (new Date(event.date)).toString().split(' ')[1] + ' ' + (new Date(event.date)).toString().split(' ')[2];
 
-    const [order, setOrder] = useState(tickets.map(ticket => ({ ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: 0 })));
+    const [order, setOrder] = useState(tickets.map(ticket => ({ ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser?.id, ticketId: ticket.id, amount: 0 })));
 
     const { setTab } = useContext(GlobalContext);
 
     const handleCheckout = () => {
-        setTab('Tickets');
-        history.push(`/users/${sessionUser.id}`);
-        return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketId: myOrder.ticketId, ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
+        if (sessionUser) {
+            setTab('Tickets');
+            history.push(`/users/${sessionUser.id}`);
+            return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketId: myOrder.ticketId, ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
+        } else {
+            history.push('/login');
+        }
     }
 
     return (
@@ -36,7 +40,7 @@ function SeeTickets({ event, tickets }) {
                             <div className='ticket-availability'>
                                 {
                                     !ticket.amount ? <p>Sold out</p> :
-                                        <select onChange={e => setOrder(order.map(order => order.ticketId === ticket.id ? { ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: Number(e.target.value) } : order))}>{((new Array(ticket.amount + 1)).fill(0)).map((num, idx) =>
+                                        <select onChange={e => setOrder(order.map(order => order.ticketId === ticket.id ? { ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser?.id, ticketId: ticket.id, amount: Number(e.target.value) } : order))}>{((new Array(ticket.amount + 1)).fill(0)).map((num, idx) =>
                                             <option key={idx.toString()} value={idx}>{idx}</option>)}
                                         </select>
                                 }

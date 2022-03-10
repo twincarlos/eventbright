@@ -141,12 +141,12 @@ div#event-page > div#event-main > div#event-host {
     padding-bottom: 100px;
 }
 
-div#event-page > div#event-main > div#event-host > p#host-name {
+div#event-page > div#event-main > div#event-host > a > p#host-name {
     font-weight: 600;
     color: rgb(0, 119, 255);
 }
 
-div#event-page > div#event-main > div#event-host > img {
+div#event-page > div#event-main > div#event-host > a img {
     width: 150px;
     height: 150px;
     object-fit: cover;

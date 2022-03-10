@@ -45,7 +45,6 @@ function ProfileButton({ user }) {
           <li onClick={() => setTab('Events')}><NavLink to={`/users/${user.id}`}>Events</NavLink></li>
           <li onClick={() => setTab('Tickets')}><NavLink to={`/users/${user.id}`}>Tickets</NavLink></li>
           <li onClick={() => setTab('Likes')}><NavLink to={`/users/${user.id}`}>Likes</NavLink></li>
-          <li onClick={() => setTab('Interests')}><NavLink to={`/users/${user.id}`}>Interests</NavLink></li>
           <li>
             <button onClick={logout}><i className="fas fa-sign-out-alt"></i> Log Out</button>
           </li>

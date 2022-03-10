@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, NavLink } from 'react-router-dom';
 import { getOneEvent } from '../../store/event';
 import { Modal } from '../../context/Modal';
 import { getAllMyLikedEvents, likeOneEvent, dislikeOneEvent } from '../../store/event';
@@ -17,13 +17,14 @@ function EventPage() {
     const tickets = useSelector(state => state.event.event?.tickets);
     const myLikedEvents = useSelector(state => state.event.myLikedEvents);
     const eventId = useParams().id;
+    const history = useHistory();
     const [showModal, setShowModal] = useState(false);
     const [editEvent, setEditEvent] = useState(false);
 
     useEffect(() => {
         dispatch(getOneEvent(eventId));
-        dispatch(getAllMyLikedEvents(sessionUser.id));
-    }, [dispatch, eventId]);
+        if (sessionUser) dispatch(getAllMyLikedEvents(sessionUser.id));
+    }, [dispatch, eventId, sessionUser]);
 
     if (!event || !host) return null;
 
@@ -51,10 +52,13 @@ function EventPage() {
                     <div id='event-interaction'>
                         <i id='share' className="fas fa-share-alt"></i>
                         {
-                            myLikedEvents?.find(myLikedEvent => myLikedEvent.id === event?.id) ?
-                            <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
+                            sessionUser ?
+                                (myLikedEvents.find(myLikedEvent => myLikedEvent.id === event.id) ?
+                                    <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
+                                        :
+                                    <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>)
                                 :
-                            <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
+                                <i className="far fa-heart" onClick={() => history.push('/login')}></i>
                         }
                         <button onClick={() => setShowModal(true)}>Tickets</button>
                     </div>
@@ -73,10 +77,9 @@ function EventPage() {
                         </div>
                     </div>
                     <div id='event-host'>
-                        <img src={host.profileImage} alt=''></img>
-                        <p id='host-name'>{host.username}</p>
+                        <NavLink to={`/users/${host.id}`}><img src={host.profileImage} alt=''></img></NavLink>
+                        <NavLink to={`/users/${host.id}`}><p id='host-name'>{host.username}</p></NavLink>
                         <p>Organizer of {event.name}</p>
-                        <button>Follow</button>
                     </div>
                 </div>
                 {
