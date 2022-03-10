@@ -1,10 +1,15 @@
 div.order-widget {
-    background-color: #dbdbdb;
     width: 700px;
-    height: 300px;
+    height: 250px;
     margin-bottom: 10px;
+    box-shadow: 0px 0px 3px #dbdbdb;
+    transition: box-shadow .5s;
 
     display: flex;
+}
+
+div.order-widget:hover {
+    box-shadow: 0px 0px 10px #dbdbdb;
 }
 
 div.order-widget > img {
@@ -14,5 +19,24 @@ div.order-widget > img {
 }
 
 div.order-widget > div.order-details {
-    line-height: 10px;
+    line-height: 15px;
+    padding-left: 10px;
+}
+
+div.order-widget > div.order-details > p {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+div.order-widget > div.order-details > div > p {
+    font-size: 14px;
+}
+
+div.order-widget > div.order-details > p.order-total {
+    font-weight: 500;
+}
+
+div.order-widget > div.order-details > p.order-date {
+    font-weight: 600;
+    color: orangered;
 }

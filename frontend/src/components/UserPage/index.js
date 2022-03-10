@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getOneUser } from '../../store/user';
 import { getAllEventsByHost } from '../../store/event';
@@ -18,6 +19,7 @@ function UserPage() {
     const orderList = useSelector(state => state.order.orderList);
     const [editEvent, setEditEvent] = useState(null);
     const [editTickets, setEditTickets] = useState(null);
+    const [selected, setSelected] = useState('Events');
 
     const image = 'https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&w=1000&q=80';
 
@@ -41,20 +43,35 @@ function UserPage() {
                             <h1>{user.username}</h1>
                         </div>
                     </div>
-                    <h1>User Events</h1>
-                    {
-                        sessionUser?.id.toString() === userId.toString() ?
-                        eventList?.map(event => <span key={event.event?.id.toString()}><p>{event.event?.name}</p><i className="fas fa-edit" onClick={() => {
-                            setEditEvent(event.event);
-                            setEditTickets(event.tickets);
-                        }}></i></span>)
-                            :
-                        eventList.map(event => <span key={event.event.id.toString()}><p>{event.event.name}</p><i className="far fa-heart"></i></span>)
-                    }
-                    <h1>User Orders</h1>
-                    {
-                        orderList?.map(order => <OrderWidget key={order.order.id.toString()} order={order}/>)
-                    }
+                    <ul>
+                        <li id={selected === 'Events' ? 'selected' : null} onClick={() => setSelected('Events')}>Events</li>
+                        <li id={selected === 'Tickets' ? 'selected' : null} onClick={() => setSelected('Tickets')}>Tickets</li>
+                        <li id={selected === 'Likes' ? 'selected' : null} onClick={() => setSelected('Likes')}>Likes</li>
+                    </ul>
+                    { selected === 'Events' && (<div id='user-event-gallery'>
+                        {
+                            sessionUser?.id.toString() === userId.toString() ?
+                            eventList?.map(event =>
+                            <div class='user-event' key={event.event?.id.toString()}>
+                                <NavLink to={`/events/${event.event.id}`}><img src={event.event.image} alt=''></img></NavLink>
+                                <i className="fas fa-pen-nib" onClick={() => {
+                                    setEditEvent(event.event);
+                                    setEditTickets(event.tickets);
+                                }}></i>
+                                <div className='user-event-details'>
+                                    <NavLink to={`/events/${event.event.id}`}><p className='user-event-name'>{event.event?.name}</p></NavLink>
+                                    <p className='user-event-date'>{(new Date(event.event.date)).toString().slice(0, 3) + ', ' + (new Date(event.event.date)).toString().slice(4, 10)}</p>
+                                    <p className='user-event-location'>{event.event.venue} * {event.event.city}, {event.event.state}</p>
+                                    <p className='user-event-price'>Starts at $</p>
+                                </div>
+                            </div>)
+                                :
+                            eventList.map(event => <span key={event.event.id.toString()}><p>{event.event.name}</p><i className="far fa-heart"></i></span>)
+                        }
+                    </div>)}
+                    { selected === 'Tickets' && (<div id='user-order-gallery'>
+                        { orderList?.map(order => <OrderWidget key={order.order.id.toString()} order={order}/>) }
+                    </div>)}
                 </>
             }
         </div>

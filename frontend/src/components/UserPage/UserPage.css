@@ -24,7 +24,6 @@ div#user-page > div#user-header > div#user-details {
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     text-align: center;
     border: 1px solid black;
     margin-bottom: 100px;
@@ -37,4 +36,111 @@ div#user-page > div#user-header > div#user-details > img {
     border-radius: 50%;
     margin: 0 auto;
     margin-top: 100px;
+}
+
+/* UL */
+div#user-page > ul {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 10px;
+    width: 78%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+div#user-page > ul > li {
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+div#user-page > ul > li#selected {
+    font-weight: 600;
+    color: rgb(0, 119, 255);
+    font-size: 18px;
+}
+
+/* EVENT WIDGET */
+div#user-event-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 80%;
+    margin: auto;
+}
+
+div.user-event {
+    width: 350px;
+    margin-bottom: 30px;
+
+    transition: box-shadow .5s;
+}
+
+div.user-event:hover {
+    box-shadow: 0px 0px 10px #dbdbdb;
+}
+
+div.user-event > a > img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+div.user-event > i {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.867);
+    bottom: 30px;
+    left: 300px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -50px;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+div.user-event > i:hover {
+    background-color: white;
+}
+
+div.user-event > div.user-event-details {
+    padding-left: 15px;
+    line-height: 12px;
+}
+
+div.user-event > div.user-event-details > a > p.user-event-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+div.user-event > div.user-event-details > p.user-event-date {
+    font-weight: 600;
+    color: orangered;
+    font-size: 14px;
+}
+
+div.user-event > div.user-event-details > p.user-event-location {
+    color: #8e8e8e;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+div.user-event > div.user-event-details > p.user-event-price {
+    color: #8e8e8e;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+/* ORDER GALLERY */
+
+div#user-order-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 76%;
+    margin: auto;
 }
