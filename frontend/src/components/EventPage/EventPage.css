@@ -9,6 +9,10 @@ div#event-page > img {
     z-index: -1;
 }
 
+div#event-page > div#event-page-edit-event {
+    margin-top: 100px;
+}
+
 div#event-page > div#event-main {
     width: 1080px;
     height: auto;

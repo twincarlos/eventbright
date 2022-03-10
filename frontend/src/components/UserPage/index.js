@@ -31,7 +31,6 @@ function UserPage() {
 
     return (
         <div id='user-page'>
-
             {
                 editEvent ? <EditEvent event={editEvent} setEditEvent={setEditEvent} tickets={editTickets}/> :
                 <>
@@ -58,7 +57,6 @@ function UserPage() {
                     }
                 </>
             }
-
         </div>
     );
 }

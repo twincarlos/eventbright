@@ -71,9 +71,10 @@ const ordersReducer = (state = initialState, action) => {
             return { ...state };
         }
         case EDIT_ORDERS: {
-            // console.log(action.editedOrders, state.orderList);
-            for (let i = 0; i < action.editedOrders.length; i++) {
-                state.orderList = state.orderList.map(order => order.order.id === action.editedOrders[i].id ? { order: action.editedOrders[i], orderInfo: order.orderInfo } : order);
+            if (state.orderList) {
+                for (let i = 0; i < action.editedOrders.length; i++) {
+                    state.orderList = state.orderList.map(order => order.order.id === action.editedOrders[i].id ? { order: action.editedOrders[i], orderInfo: order.orderInfo } : order);
+                }
             }
             return { ...state };
         }

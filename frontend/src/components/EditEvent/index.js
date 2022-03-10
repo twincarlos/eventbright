@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { editOneEvent, deleteOneEvent } from '../../store/event';
 import { editAllOrders } from '../../store/order';
 
 import './EditEvent.css';
 
 function EditEvent({ event, setEditEvent, tickets }) {
+    const history = useHistory();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
@@ -59,7 +61,9 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 date,
                 tickets: newTickets
             }));
-            return setEditEvent(null);
+
+            history.push(`/events/${event.id}`);
+            return setEditEvent(false);
         }
     }
 
@@ -120,11 +124,12 @@ function EditEvent({ event, setEditEvent, tickets }) {
                     <button id='delete-button' onClick={e => {
                         e.preventDefault();
                         dispatch(deleteOneEvent(event.id));
+                        history.push(`/users/${sessionUser.id}`);
                         setEditEvent(false);
                     }}><i className="fas fa-trash-alt"></i> Delete</button>
                     <button id='cancel-button' onClick={e => {
                         e.preventDefault();
-                        setEditEvent(null);
+                        setEditEvent(false);
                     }
                     }>Cancel</button>
                 </div>

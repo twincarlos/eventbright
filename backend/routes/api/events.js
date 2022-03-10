@@ -28,8 +28,9 @@ router.get('/search/:location/:category', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const event = await Event.findByPk(req.params.id);
     const host = await User.findByPk(event.hostId);
+    const tickets = await Ticket.findAll({ where: { eventId: req.params.id } });
 
-    return res.json({ event, host });
+    return res.json({ event, host, tickets });
 });
 
 router.post('/', async (req, res) => {
@@ -65,6 +66,7 @@ router.put('/', async (req, res) => {
     const { tickets } = req.body;
     const editedEvent = await Event.findByPk(req.body.id);
     await editedEvent.update(req.body);
+    const host = await User.findByPk(req.body.hostId);
 
     // const allOrders = await Order.findAll({ where: { eventId: req.body.id } });
 
@@ -97,7 +99,7 @@ router.put('/', async (req, res) => {
         }
     }
 
-    return res.json({ event: editedEvent, tickets: newTickets });
+    return res.json({ event: editedEvent, host: host.dataValues, tickets: newTickets });
 });
 
 router.delete('/', async (req, res) => {
