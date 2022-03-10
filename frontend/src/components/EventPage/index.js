@@ -10,6 +10,7 @@ import './EventPage.css';
 
 function EventPage() {
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session?.user);
     const event = useSelector(state => state.event.event?.event);
     const host = useSelector(state => state.event.event?.host);
     const tickets = useSelector(state => state.ticket.ticketList);
@@ -30,19 +31,43 @@ function EventPage() {
                 <div id='event-header'>
                     <img src={event.image} alt=''></img>
                     <div id='event-details'>
+                        {
+                            sessionUser?.id === host?.id ?
+                            <div id='edit-delete-event'>
+                                <button><i className="fas fa-edit"></i> Edit</button>
+                                <button><i className="far fa-trash-alt"></i> Delete</button>
+                            </div>
+                            :
+                            null
+                        }
                         <h1>{event.name}</h1>
-                        <p>{event.date}</p>
-                        <p>${event.price}</p>
+                        <p id='event-date'><i className="far fa-calendar-alt"></i> {(new Date(event.date)).toString().slice(4, 10)}</p>
                     </div>
                 </div>
                 <div id='event-interaction'>
-                    <i className="fas fa-share-alt"></i>
+                    <i id='share' className="fas fa-share-alt"></i>
                     <i className="far fa-heart"></i>
                     <button onClick={() => setShowModal(true)}>Tickets</button>
                 </div>
                 <div id='event-info'>
-                    <h1>About Event</h1>
-                    <p>I haven't implemented this section yet :-(</p>
+                    <div id='event-about-left'>
+                        <h1>About Event</h1>
+                        <p>{event.about}</p>
+                    </div>
+                    <div id='event-about-right'>
+                        <h2>Date</h2>
+                        <p>{event.date}</p>
+                        <h2>Location</h2>
+                        <p>{event.venue}</p>
+                        <p>{event.address}</p>
+                        <p>{event.city}, {event.state}</p>
+                    </div>
+                </div>
+                <div id='event-host'>
+                    <img src={host.profileImage} alt=''></img>
+                    <p id='host-name'>{host.username}</p>
+                    <p>Organizer of {event.name}</p>
+                    <button>Follow</button>
                 </div>
             </div>
             {

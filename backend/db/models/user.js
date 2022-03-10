@@ -29,12 +29,16 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [60, 60]
       }
+    },
+    profileImage: {
+      allowNull: false,
+      type: DataTypes.STRING
     }
   },
     {
       defaultScope: {
         attributes: {
-          exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt']
+          exclude: ['hashedPassword', 'createdAt', 'updatedAt']
         }
       },
       scopes: {
@@ -48,8 +52,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-    const { id, username, email } = this; // context will be the User instance
-    return { id, username, email };
+    const { id, username, email, profileImage } = this; // context will be the User instance
+    return { id, username, email, profileImage };
   };
 
   User.getCurrentUserById = async function (id) {

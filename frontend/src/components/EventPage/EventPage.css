@@ -2,7 +2,7 @@ div#event-page > img {
     width: 100%;
     height: 700px;
     object-fit: cover;
-    filter: blur(30px);
+    filter: brightness(30%);
     position: absolute;
     left: 0;
     top: 50px;
@@ -15,12 +15,140 @@ div#event-page > div#event-main {
     background-color: white;
     margin: auto;
     margin-top: 100px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 100px;
 }
 
 div#event-page > div#event-main > div#event-header {
     display: flex;
 }
 
+div#event-page > div#event-main > div#event-header > div#event-details {
+    background-color: #eeeeee;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 30px;
+}
+
+div#event-page > div#event-main > div#event-header > div#event-details > p#event-date {
+    font-weight: 600;
+    color: orangered;
+}
+
 div#event-page > div#event-main > div#event-header > img {
     width: 67%;
+    border-top-left-radius: 5px;
+}
+
+div#event-page > div#event-main > div#event-header > div#event-details > div#edit-delete-event {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div#event-page > div#event-main > div#event-header > div#event-details > div#edit-delete-event > button {
+    border: none;
+    height: 40px;
+    width: 100px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: font-size .5s;
+}
+
+div#event-page > div#event-main > div#event-header > div#event-details > div#edit-delete-event > button:hover {
+    font-size: 20px;
+}
+
+div#event-page > div#event-main > div#event-interaction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #dbdbdb;
+}
+
+div#event-page > div#event-main > div#event-interaction > i {
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color .5s;
+}
+
+div#event-page > div#event-main > div#event-interaction > i:hover {
+    background-color: #dbdbdb3b;
+}
+
+div#event-page > div#event-main > div#event-interaction > i#share {
+    margin-right: 30px;
+}
+
+div#event-page > div#event-main > div#event-interaction > button {
+    width: 250px;
+    height: 40px;
+    margin-left: 650px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    transition: background-color .5s;
+}
+
+div#event-page > div#event-main > div#event-interaction > button:hover {
+    background-color: rgba(0, 128, 0, 0.787);
+}
+
+div#event-page > div#event-main > div#event-info {
+    display: flex;
+}
+
+div#event-page > div#event-main > div#event-info > div#event-about-left {
+    width: 62%;
+    padding-left: 50px;
+}
+
+div#event-page > div#event-main > div#event-info > div#event-about-right {
+    padding-top: 20px;
+    padding-left: 30px;
+    line-height: 10px;
+    padding-bottom: 20px;
+}
+
+
+div#event-page > div#event-main > div#event-host {
+    border: 1px solid #dbdbdb;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+div#event-page > div#event-main > div#event-host > p#host-name {
+    font-weight: 600;
+    color: rgb(0, 119, 255);
+}
+
+div#event-page > div#event-main > div#event-host > img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+div#event-page > div#event-main > div#event-host > button {
+    background-color: rgb(0, 119, 255);
+    border: none;
+    height: 50px;
+    width: 150px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 15px;
 }
