@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getOneUser } from '../../store/user';
 import { getAllEventsByHost } from '../../store/event';
 import { getAllOrders } from '../../store/order';
+import { getAllMyLikedEvents, getAllLikedEvents, likeOneEvent, dislikeOneEvent } from '../../store/event';
 import EditEvent from '../EditEvent';
 import OrderWidget from '../OrderWidget';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -18,6 +19,8 @@ function UserPage() {
     const sessionUser = useSelector(state => state.session.user);
     const eventList = useSelector(state => state.event.eventListByHost);
     const orderList = useSelector(state => state.order.orderList);
+    const likedEvents = useSelector(state => state.event.likedEvents);
+    const myLikedEvents = useSelector(state => state.event.myLikedEvents);
     const [editEvent, setEditEvent] = useState(null);
     const [editTickets, setEditTickets] = useState(null);
     const { tab, setTab } = useContext(GlobalContext);
@@ -28,6 +31,8 @@ function UserPage() {
         dispatch(getOneUser(userId));
         dispatch(getAllEventsByHost(userId));
         dispatch(getAllOrders(userId));
+        dispatch(getAllLikedEvents(userId));
+        dispatch(getAllMyLikedEvents(sessionUser.id));
     }, [dispatch, userId]);
 
     if (!user || !eventList) return null;
@@ -80,9 +85,33 @@ function UserPage() {
                                 </div>)
                         }
                     </div>)}
-                    { tab === 'Tickets' && (<div id='user-order-gallery'>
-                        { orderList?.map(order => <OrderWidget key={order.order.id.toString()} order={order}/>) }
-                    </div>)}
+                    {
+                        tab === 'Tickets' && (<div id='user-order-gallery'>
+                            { orderList?.map(order => <OrderWidget key={order.order.id.toString()} order={order}/>) }
+                        </div>)
+                    }
+                    {
+                        tab === 'Likes' && (
+                            <div id='user-ticket-gallery'>
+                                {
+                                    likedEvents.map(likedEvent => (<div key={likedEvent.id.toString()} className='liked-event'>
+                                        <NavLink to={`/events/${likedEvent.id}`}><img src={likedEvent.image} alt=''></img></NavLink>
+                                        {
+                                            myLikedEvents.find(myLikedEvent => myLikedEvent.id === likedEvent.id) ?
+                                            <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: likedEvent.id }))}></i>
+                                                :
+                                            <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: likedEvent.id }))}></i>
+                                        }
+                                        <div className='liked-event-details'>
+                                            <NavLink to={`/events/${likedEvent.id}`}><p className='user-event-name'>{likedEvent.name}</p></NavLink>
+                                            <p className='liked-event-date'>{(new Date(likedEvent.date)).toString().slice(0, 3) + ', ' + (new Date(likedEvent.date)).toString().slice(4, 10)}</p>
+                                            <p className='liked-event-location'>{likedEvent.venue} * {likedEvent.city}, {likedEvent.state}</p>
+                                        </div>
+                                    </div>))
+                                }
+                            </div>
+                        )
+                    }
                 </>
             }
         </div>

@@ -6,6 +6,7 @@ const CREATE_EVENT = 'events/createEvent';
 const GET_EVENTS_BY_HOST = 'events/getEventsByHost';
 const EDIT_EVENT = 'events/editEvent';
 const DELETE_EVENT = 'events/deleteEvent';
+const GET_MY_LIKED_EVENTS = 'events/getMyLiked/Events';
 const GET_LIKED_EVENTS = 'events/getLikedEvents';
 const LIKE_EVENT = 'events/likeEvent';
 const DISLIKE_EVENT = 'events/dislikeEvent';
@@ -49,6 +50,13 @@ const deleteEvent = deletedEvent => {
     return {
         type: DELETE_EVENT,
         deletedEvent
+    }
+}
+
+const getMyLikedEvents = myLikedEvents => {
+    return {
+        type: GET_MY_LIKED_EVENTS,
+        myLikedEvents
     }
 }
 
@@ -139,8 +147,14 @@ export const deleteOneEvent = id => async dispatch => {
     return deletedEvent;
 }
 
-export const getAllLikedEvents = data => async dispatch => {
-    const { userId } = data;
+export const getAllMyLikedEvents = userId => async dispatch => {
+    const response = await csrfFetch(`/api/likes/${userId}`);
+    const myLikedEvents = await response.json();
+    dispatch(getMyLikedEvents(myLikedEvents));
+    return myLikedEvents;
+}
+
+export const getAllLikedEvents = userId => async dispatch => {
     const response = await csrfFetch(`/api/likes/${userId}`);
     const likedEvents = await response.json();
     dispatch(getLikedEvents(likedEvents));
@@ -204,16 +218,20 @@ const eventsReducer = (state = initialState, action) => {
             state.eventListByHost = state.eventListByHost.filter(event => event.event.id !== action.deletedEvent.id);
             return { ...state };
         }
+        case GET_MY_LIKED_EVENTS: {
+            state.myLikedEvents = action.myLikedEvents;
+            return { ...state };
+        }
         case GET_LIKED_EVENTS: {
             state.likedEvents = action.likedEvents;
             return { ...state };
         }
         case LIKE_EVENT: {
-            state.likedEvents = [action.newLike, ...state.likedEvents];
+            state.myLikedEvents = [action.newLike, ...state.myLikedEvents];
             return { ...state };
         }
         case DISLIKE_EVENT: {
-            state.likedEvents = state.likedEvents.filter(likedEvent => likedEvent.id !== action.newDislike.id);
+            state.myLikedEvents = state.myLikedEvents.filter(likedEvent => likedEvent.id !== action.newDislike.id);
             return { ...state };
         }
         default:

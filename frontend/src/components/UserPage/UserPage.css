@@ -62,7 +62,7 @@ div#user-page > ul > li#selected {
     font-size: 18px;
 }
 
-/* EVENT WIDGET */
+/* EVENT GALLERY */
 div#user-event-gallery {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -144,4 +144,86 @@ div#user-order-gallery {
     grid-template-columns: 1fr 1fr;
     width: 76%;
     margin: auto;
+}
+
+/* LIKED EVENT GALLERY */
+
+div#user-ticket-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 80%;
+    margin: auto;
+}
+
+div.liked-event {
+    width: 350px;
+    margin-bottom: 30px;
+
+    transition: box-shadow .5s;
+}
+
+div.liked-event:hover {
+    box-shadow: 0px 0px 10px #dbdbdb;
+}
+
+div.liked-event > a > img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+div.liked-event > i {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.867);
+    bottom: 30px;
+    left: 300px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -50px;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+div.liked-event > i:hover {
+    background-color: white;
+}
+
+div.liked-event > i.liked-heart {
+    color: rgb(255, 0, 98);
+    background-color: rgba(255, 192, 224, 0.87);
+    border: 0.5px solid rgb(255, 0, 9);
+}
+
+div.liked-event > div.liked-event-details {
+    padding-left: 15px;
+    line-height: 12px;
+}
+
+div.liked-event > div.liked-event-details > a > p.liked-event-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+div.liked-event > div.liked-event-details > p.liked-event-date {
+    font-weight: 600;
+    color: orangered;
+    font-size: 14px;
+}
+
+div.liked-event > div.liked-event-details > p.liked-event-location {
+    color: #8e8e8e;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+div.liked-event > div.liked-event-details > p.liked-event-price {
+    color: #8e8e8e;
+    font-weight: 300;
+    font-size: 14px;
 }

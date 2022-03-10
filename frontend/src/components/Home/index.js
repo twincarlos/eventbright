@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEvents, getAllLikedEvents } from '../../store/event';
+import { getAllEvents, getAllMyLikedEvents } from '../../store/event';
 import EventWidget from './EventWidget';
 
 import './Home.css';
@@ -18,7 +18,7 @@ function Home() {
 
     useEffect(() => {
         dispatch(getAllEvents({ location, category }));
-        dispatch(getAllLikedEvents({ userId: sessionUser.id }));
+        dispatch(getAllMyLikedEvents(sessionUser.id));
     }, [dispatch, location, category, sessionUser.id]);
 
     if (!eventList) return null;

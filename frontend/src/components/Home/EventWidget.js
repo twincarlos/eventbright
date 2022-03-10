@@ -9,7 +9,7 @@ function EventWidget({ event }) {
     const dispatch = useDispatch();
     const date = (new Date(event.event.date)).toString().split(' ')[0] + ', ' + (new Date(event.event.date)).toString().split(' ')[1] + ' ' + (new Date(event.event.date)).toString().split(' ')[2];
     const sessionUser = useSelector(state => state.session.user);
-    const likedEvents = useSelector(state => state.event.likedEvents);
+    const likedEvents = useSelector(state => state.event.myLikedEvents);
 
     return (
         <div className='event-widget'>
