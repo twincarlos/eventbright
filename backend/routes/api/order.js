@@ -9,8 +9,6 @@ router.get('/:userId', async (req, res) => {
 
     for (let i = 0; i < allOrders.length; i++) {
         const orderDetails = await OrderDetail.findAll({ where: { orderId: allOrders[i].id } });
-        // const event = await Event.findByPk(allOrders[i].eventId);
-        // const host  = await User.findByPk(allOrders[i].hostId);
         const orderInfo = [];
 
         for (let k = 0; k < orderDetails.length; k++) {
@@ -33,6 +31,8 @@ router.post('/', async (req, res) => {
         await orderDetails.save();
         orderInfo.push(orderDetails.dataValues);
     }
+
+    console.log(newOrder, orderInfo);
 
     return res.json({ order: newOrder, orderInfo });
 });

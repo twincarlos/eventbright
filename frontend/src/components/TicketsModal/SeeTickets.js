@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createOneOrder } from '../../store/order';
+import { GlobalContext } from '../../context/GlobalContext';
 
 import './TicketsModal.css';
 
@@ -13,7 +14,10 @@ function SeeTickets({ event, tickets }) {
 
     const [order, setOrder] = useState(tickets.map(ticket => ({ ticketName: ticket.name, ticketPrice: ticket.price, userId: sessionUser.id, ticketId: ticket.id, amount: 0 })));
 
+    const { setTab } = useContext(GlobalContext);
+
     const handleCheckout = () => {
+        setTab('Tickets');
         history.push(`/users/${sessionUser.id}`);
         return dispatch(createOneOrder({ order: { userId: sessionUser.id, hostId: event.hostId, eventId: event.id, eventName: event.name, eventDate: event.date, eventImage: event.image }, orderDetails: order.map(myOrder => ({ ticketName: myOrder.ticketName, ticketPrice: myOrder.ticketPrice, amount: myOrder.amount }))}));
     }

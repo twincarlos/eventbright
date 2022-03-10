@@ -68,32 +68,16 @@ router.put('/', async (req, res) => {
     await editedEvent.update(req.body);
     const host = await User.findByPk(req.body.hostId);
 
-    // const allOrders = await Order.findAll({ where: { eventId: req.body.id } });
-
-    // for (let i = 0; i < allOrders.length; i++) {
-    //     const order = allOrders[i];
-    //     await order.update({ eventName: req.body.name, eventDate: req.body.date, eventImage: req.body.image });
-    //     await order.save();
-    // }
-
     const newTickets = [];
 
     for (let i = 0; i < tickets.length; i++) {
-        const ticket = await Ticket.findByPk(tickets[i].id);
-
-        // if (tickets[i].delete) {
-        //     const orderDetails = await OrderDetail.findAll({ where: { ticketId: tickets[i].id } });
-        //     for (let k = 0; k < orderDetails.length; k++) {
-        //         await orderDetails[k].destroy();
-        //     }
-        //     await ticket.destroy();
-        // }
-        if (ticket) {
+        if (typeof tickets[i].id === 'number') {
+            const ticket = await Ticket.findByPk(tickets[i].id);
             await ticket.update({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
             await ticket.save();
             newTickets.push(ticket.dataValues);
         } else {
-            let newTicket = await Ticket.create({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
+            const newTicket = await Ticket.create({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
             await newTicket.save();
             newTickets.push(newTicket.dataValues);
         }
@@ -107,19 +91,9 @@ router.delete('/', async (req, res) => {
     const tickets = await Ticket.findAll({ where: { eventId: req.body.id } });
     const orders = await Order.findAll({ where: { eventId: req.body.id } });
 
-    for (let i = 0; i < tickets.length; i++) {
-    //     const orderDetails = await OrderDetail.findAll({ where: { ticketId: tickets[i].id } });
+    for (let i = 0; i < tickets.length; i++)  await tickets[i].destroy();
 
-    //     for (k = 0; k < orderDetails.length; k++) {
-    //         await orderDetails[k].destroy();
-    //     }
-
-        await tickets[i].destroy();
-    }
-
-    for (let i = 0; i < orders.length; i++) {
-        await orders[i].update({ eventId: 0 });
-    }
+    for (let i = 0; i < orders.length; i++) await orders[i].update({ eventId: 0 });
 
     await deletedEvent.destroy();
     return res.json(deletedEvent);

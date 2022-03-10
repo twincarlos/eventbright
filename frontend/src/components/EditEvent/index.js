@@ -96,7 +96,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 <input placeholder='date' type='date' onChange={e => setDate(e.target.value)} value={date}></input>
 
                 <h1><i className="fas fa-ticket-alt"></i> Edit Event Tickets</h1>
-                <button id='add-edit-ticket' onClick={() => setNewTickets([{ id: `0${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}><i className="fas fa-plus"></i> Add ticket</button>
+                <button id='add-edit-ticket' onClick={() => setNewTickets([{ id: `X${newTickets.length}`, eventId: event.id, name: '', price: 0, amount: 0 }, ...newTickets])}><i className="fas fa-plus"></i> Add ticket</button>
                 {
                     ticketError && (<p>You must have at least one ticket</p>)
                 }
