@@ -76,7 +76,7 @@ function UserPage() {
                                         <NavLink to={`/events/${event.event.id}`}><img src={event.event.image} alt=''></img></NavLink>
                                         {
                                             sessionUser ?
-                                            (myLikedEvents.find(myLikedEvent => myLikedEvent.id === event.event.id) ?
+                                            (myLikedEvents?.find(myLikedEvent => myLikedEvent.id === event.event.id) ?
                                                 <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: event.event.id }))}></i>
                                                     :
                                                 <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: event.event.id }))}></i>)
