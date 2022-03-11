@@ -58,7 +58,7 @@ function UserPage() {
                     { tab === 'Events' && (<div id='user-event-gallery'>
                         {
                             sessionUser?.id.toString() === userId.toString() ?
-                                eventList.map(event =>
+                                eventList?.map(event =>
                                 <div className='user-event' key={event.event?.id.toString()}>
                                     <NavLink to={`/events/${event.event.id}`}><img src={event.event.image} alt=''></img></NavLink>
                                     <i className="fas fa-pen-nib" onClick={() => {
@@ -69,11 +69,11 @@ function UserPage() {
                                         <NavLink to={`/events/${event.event.id}`}><p className='user-event-name'>{event.event?.name}</p></NavLink>
                                         <p className='user-event-date'>{(new Date(event.event.date)).toString().slice(0, 3) + ', ' + (new Date(event.event.date)).toString().slice(4, 10)}</p>
                                         <p className='user-event-location'>{event.event.venue} * {event.event.city}, {event.event.state}</p>
-                                        <p className='user-event-price'>Starts at ${event.tickets.map(ticket => Number(ticket.price)).sort()[0]}</p>
+                                        <p className='user-event-price'>Starts at ${event.tickets?.map(ticket => Number(ticket.price)).sort()[0]}</p>
                                     </div>
                                 </div>)
                                     :
-                                eventList.map(event =>
+                                eventList?.map(event =>
                                     <div className='user-event' key={event.event?.id.toString()}>
                                         <NavLink to={`/events/${event.event.id}`}><img src={event.event.image} alt=''></img></NavLink>
                                         {
@@ -89,7 +89,7 @@ function UserPage() {
                                             <NavLink to={`/events/${event.event.id}`}><p className='user-event-name'>{event.event?.name}</p></NavLink>
                                             <p className='user-event-date'>{(new Date(event.event.date)).toString().slice(0, 3) + ', ' + (new Date(event.event.date)).toString().slice(4, 10)}</p>
                                             <p className='user-event-location'>{event.event.venue} * {event.event.city}, {event.event.state}</p>
-                                            <p className='user-event-price'>Starts at ${event.tickets.map(ticket => Number(ticket.price)).sort()[0]}</p>
+                                            <p className='user-event-price'>Starts at ${event.tickets?.map(ticket => Number(ticket.price)).sort()[0]}</p>
                                         </div>
                                     </div>)
                         }
@@ -103,7 +103,7 @@ function UserPage() {
                         tab === 'Likes' && (
                             <div id='user-ticket-gallery'>
                                 {
-                                    likedEvents.map(likedEvent => (<div key={likedEvent.id.toString()} className='liked-event'>
+                                    likedEvents?.map(likedEvent => (<div key={likedEvent.id.toString()} className='liked-event'>
                                         <NavLink to={`/events/${likedEvent.id}`}><img src={likedEvent.image} alt=''></img></NavLink>
                                         {
                                             sessionUser ?
