@@ -53,7 +53,7 @@ function EventPage() {
                         <i id='share' className="fas fa-share-alt"></i>
                         {
                             sessionUser ?
-                                (myLikedEvents.find(myLikedEvent => myLikedEvent.id === event.id) ?
+                                (myLikedEvents?.find(myLikedEvent => myLikedEvent.id === event.id) ?
                                     <i className="fas fa-heart liked-heart" onClick={() => dispatch(dislikeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>
                                         :
                                     <i className="far fa-heart" onClick={() => dispatch(likeOneEvent({ userId: sessionUser.id, eventId: event.id }))}></i>)

@@ -31,13 +31,14 @@ ul#nav > li > form > input {
     color: #9c9c9c;
 }
 
-ul#nav > li > form > button {
+ul#nav > li > form > i {
     background-color: transparent;
     border: none;
+    color: #9c9c9c;
 }
 
-ul#nav > li > form > button > i {
-    color: #9c9c9c;
+ul#nav > li > form > i.fa-times-circle {
+    cursor: pointer;
 }
 
 a#create-event {
@@ -140,4 +141,24 @@ ul.profile-dropdown > li > button {
 
 ul.profile-dropdown > li > button:hover {
     font-weight: 600;
+}
+
+/* SEARCH EVENTS */
+ul#nav > li#search-events-container {
+    position: absolute;
+    left: 240px;
+    top: 50px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: #efefefe8;
+    border-radius: 5px;
+}
+
+ul#nav > li#search-events-container > a {
+    padding-left: 15px;
+    padding-top: 10px;
+    border-bottom: 0.5px solid black;
+    height: 35px;
+    font-weight: 400;
 }

@@ -1,5 +1,6 @@
 import { csrfFetch } from "./csrf";
 
+const SEARCH_EVENTS = 'events/searchEvents';
 const GET_ALL_EVENTS = 'events/getAllEvents';
 const GET_ONE_EVENT = 'events/getOneEvent';
 const CREATE_EVENT = 'events/createEvent';
@@ -10,6 +11,13 @@ const GET_MY_LIKED_EVENTS = 'events/getMyLiked/Events';
 const GET_LIKED_EVENTS = 'events/getLikedEvents';
 const LIKE_EVENT = 'events/likeEvent';
 const DISLIKE_EVENT = 'events/dislikeEvent';
+
+const searchEvents = searchList => {
+    return {
+        type: SEARCH_EVENTS,
+        searchList
+    }
+}
 
 const getEvents = eventList => {
     return {
@@ -81,9 +89,18 @@ const dislikeEvent = newDislike => {
     }
 }
 
+export const searchAllEvents = data => async dispatch => {
+    let name = data;
+    if (!data.length) name = 'Any';
+    const response = await csrfFetch(`/api/events/name/${name}`);
+    const searchList = await response.json();
+    dispatch(searchEvents(searchList));
+    return searchList;
+}
+
 export const getAllEvents = data => async dispatch => {
     let { location, category } = data;
-    if (!location) location = 'Any';
+    if (!location.length) location = 'Any';
 
     const response = await csrfFetch(`/api/events/search/${location}/${category}`);
     const eventList = await response.json();
@@ -193,6 +210,10 @@ const initialState = {};
 
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SEARCH_EVENTS: {
+            state.searchList = action.searchList;
+            return { ...state };
+        }
         case GET_ALL_EVENTS: {
             state.eventList = action.eventList;
             return { ...state };

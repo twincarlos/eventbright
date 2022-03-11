@@ -8,7 +8,7 @@ import './Home.css';
 function Home() {
     const CATEGORIES = ['Any', 'Charity', 'Fashion', 'Entertainmnet', 'Food', 'Politics', 'Fitness', 'Hobbies', 'Music', 'Religion', 'Sports'];
     const [category, setCategory] = useState('Any');
-    const [location, setLocation] = useState('Any');
+    const [location, setLocation] = useState('');
 
     const sessionUser = useSelector(state => state.session.user);
     const eventList = useSelector(state => state.event.eventList);
@@ -28,8 +28,8 @@ function Home() {
             <div id='home'>
                 <div id='popular-div'>
                     <h1>Popular in</h1>
-                    <input type='text' placeholder='Search for city or state' value={location === 'Any' ? '' : location} onChange={e => setLocation(e.target.value)}></input>
-                    <i class="fas fa-times-circle" onClick={() => setLocation('Any')}></i>
+                    <input type='text' placeholder='Search for city or state' value={location} onChange={e => setLocation(e.target.value)}></input>
+                    { !location.length ? null : <i className="fas fa-times-circle" onClick={() => setLocation('')}></i> }
                 </div>
                 <ul>
                     { CATEGORIES.map(thisCategory => <li className={thisCategory === category ? 'selected' : null} key={thisCategory} onClick={() => setCategory(thisCategory)}>{thisCategory}</li>) }

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import * as sessionActions from '../../store/session';
+import { searchAllEvents } from '../../store/event';
 import logo from '../../assets/logo.png';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const searchList = useSelector(state => state.event.searchList);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    dispatch(searchAllEvents(name));
+  }, [dispatch, name]);
 
   const handleDemo = e => {
     e.preventDefault();
@@ -38,11 +45,17 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink id='home-a' exact to="/"><img src={logo} alt=''></img></NavLink>
         <form>
-          <button onClick={e => e.preventDefault()}><i className="fas fa-search"></i></button>
-          <input type='text' placeholder='Search events'></input>
+          { name.length ? <i className="fas fa-times-circle" onClick={() => setName('')}></i> : <i className="fas fa-search"></i>}
+          <input type='text' placeholder='Search events' value={name} onChange={e => setName(e.target.value)}></input>
         </form>
         {isLoaded && sessionLinks}
       </li>
+      {
+        searchList?.length ?
+        (<li id='search-events-container'>
+          { searchList.map(event => <NavLink to={`/events/${event.id}`} onClick={() => setName('')} key={event.id.toString()}>{event.name}</NavLink>) }
+        </li>) : null
+      }
     </ul>
   );
 }

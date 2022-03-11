@@ -4,6 +4,12 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 
+router.get('/name/:name', async (req, res) => {
+    if (req.params.name === 'Any') return res.json([]);
+    const searchList = await Event.findAll({ where: { name: { [Op.or]: [{ [Op.substring]: req.params.name }, { [Op.startsWith]: req.params.name[0].toLowerCase() + req.params.name.slice(1) }, { [Op.startsWith]: req.params.name[0].toUpperCase() + req.params.name.slice(1) }, { [Op.iLike]: `%${req.params.name}` } ] } } });
+    return res.json(searchList);
+});
+
 router.get('/search/:location/:category', async (req, res) => {
     const location = req.params.location;
     const category = req.params.category;

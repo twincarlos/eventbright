@@ -67,7 +67,7 @@ const ordersReducer = (state = initialState, action) => {
             return { ...state };
         }
         case CREATE_ORDER: {
-            state.orderList = [action.newOrder, ...state.orderList];
+            state.orderList = [...state.orderList];
             return { ...state };
         }
         case EDIT_ORDERS: {

@@ -26,8 +26,6 @@ function UserPage() {
     const [editTickets, setEditTickets] = useState(null);
     const { tab, setTab } = useContext(GlobalContext);
 
-    const image = 'https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tfGVufDB8fDB8fA%3D%3D&w=1000&q=80';
-
     useEffect(() => {
         dispatch(getOneUser(userId));
         dispatch(getAllEventsByHost(userId));
@@ -44,9 +42,9 @@ function UserPage() {
                 editEvent ? <EditEvent event={editEvent} setEditEvent={setEditEvent} tickets={editTickets}/> :
                 <>
                     <div id='user-header'>
-                        <img src={image} alt=''></img>
+                        <img src={user.profileImage} alt=''></img>
                         <div id='user-details'>
-                            <img src={image} alt=''></img>
+                            <img src={user.profileImage} alt=''></img>
                             <h1>{user.username}</h1>
                         </div>
                     </div>
