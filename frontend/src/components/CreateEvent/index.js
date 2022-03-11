@@ -45,6 +45,8 @@ function CreateEvent() {
     const handleSubmit = e => {
         e.preventDefault();
 
+        if (!sessionUser) return history.push('/login');
+
         let err = false;
 
         for (let i = 0; i < tickets.length; i++) {

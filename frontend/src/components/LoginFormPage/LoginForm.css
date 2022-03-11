@@ -1,4 +1,104 @@
-form#login {
-    position: relative;
-    top: 50px;
+div#login-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 800px;
+    position: absolute;
+    top: 65px;
+    left: 0;
+}
+
+div#login-page > div#login {
+    margin-top: 90px;
+}
+
+div#login-page > div#login > form {
+    width: 37%;
+    margin: auto;
+}
+
+div#login-page > div#login > form > h1 {
+    font-size: 45px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+div#login-page > div#login > form > img {
+    width: 100px;
+}
+
+div#login-page > div#login > form > div.label-input {
+    border: 1px solid #dbdbdb;
+    padding-left: 10px;
+    padding-top: 5px;
+    height: 40px;
+    margin-bottom: 10px;
+    transition: border .5s;
+}
+
+div#login-page > div#login > form > div.label-input:hover {
+    border: 1px solid black;
+}
+
+div#login-page > div#login > form > div.label-input > label {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+div#login-page > div#login > form > div.label-input > input {
+    width: 100%;
+}
+
+div#login-page > div#login > form > div.label-input > label, div#login-page > div#login > form > div.label-input > input {
+    display: block;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+div#login-page > div#login > form > button#login-button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    font-weight: 600;
+    background-color: rgb(218, 75, 24);
+    color: white;
+    transition: background-color .5s;
+}
+
+div#login-page > div#login > form > button#login-button:hover {
+    background-color: orangered;
+}
+
+div#login-page > div#login > form > button#demo-button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    font-weight: 600;
+    background-color: transparent;
+    color: orangered;
+    margin-top: 10px;
+}
+
+div#login-page > div#login > form > a > button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    font-weight: 600;
+    background-color: transparent;
+    color: orangered;
+    margin-top: -10px;
+}
+
+div#login-page > div#login > form > hr {
+    width: 100%;
+    background-color: transparent;
+    height: 0;
+    border-top: 1px solid #8e8e8e;
+    margin-top: 30px;
+}
+
+div#login-page > img {
+    width: 100%;
+    height: 113%;
+    object-fit: cover;
 }

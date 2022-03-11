@@ -162,3 +162,20 @@ ul#nav > li#search-events-container > a {
     height: 35px;
     font-weight: 400;
 }
+
+div#session-links > a#demo-a {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+}
+
+div#session-links > a#signup-a {
+    position: absolute;
+    top: 20px;
+    right: 150px;
+}
+div#session-links > a#login-a {
+    position: absolute;
+    top: 20px;
+    right: 250px;
+}

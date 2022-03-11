@@ -34,6 +34,8 @@ function EditEvent({ event, setEditEvent, tickets }) {
     const handleEdit = e => {
         e.preventDefault();
 
+        if (!sessionUser) return history.push('/login');
+
         let err = false;
 
         for (let i = 0; i < newTickets.length; i++) {
@@ -130,6 +132,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
                     <button id='save-button' onClick={handleEdit}><i className="fas fa-save"></i> Save</button>
                     <button id='delete-button' onClick={e => {
                         e.preventDefault();
+                        if (!sessionUser) return history.push('/login');
                         dispatch(deleteOneEvent(event.id));
                         history.push(`/users/${sessionUser.id}`);
                         setEditEvent(false);
