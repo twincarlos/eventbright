@@ -17,6 +17,7 @@ function CreateEvent() {
     const day = now.getDate().toString().length > 1 ? now.getDate().toString() : `0${now.getDate().toString()}`;
     const today = year + '-' + month + '-' + day;
 
+    const CATEGORIES = ['Charity', 'Fashion', 'Entertainmnet', 'Food', 'Politics', 'Fitness', 'Hobbies', 'Music', 'Religion', 'Sports', 'Other'];
 
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
@@ -26,6 +27,7 @@ function CreateEvent() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [category, setCategory] = useState('');
+    const [otherCategory, setOtherCategory] = useState('');
     const [date, setDate] = useState(today);
 
     const [ticketName, setTicketName] = useState('');
@@ -49,7 +51,7 @@ function CreateEvent() {
             if (!tickets[i].name.length || !tickets[i].amount) err = true;
         }
 
-        if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err || ((new Date(date)).getTime() <= Date.now())) {
+        if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err || ((new Date(date)).getTime() <= Date.now()) || (category === 'Other' && !otherCategory.length) ) {
             setError(true);
         } else {
             setError(false);
@@ -64,7 +66,7 @@ function CreateEvent() {
                 city,
                 state,
                 country: 'United States',
-                category,
+                category: category === 'Other' ? otherCategory : category,
                 date,
                 tickets
             }));
@@ -127,7 +129,10 @@ function CreateEvent() {
                 <label>Tell us about your event</label>
                 <textarea placeholder='about' onChange={e => setAbout(e.target.value)} defaultValue={about}></textarea>
                 <label>What type of event is it?</label>
-                <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
+                <select onChange={e => setCategory(e.target.value)} value={category}>
+                    { CATEGORIES.map(option => <option key={option} value={option}>{option}</option>) }
+                </select>
+                    { category === 'Other' && (<input type='text' placeholder='category' value={otherCategory} onChange={e => setOtherCategory(e.target.value)}></input>) }
                 <label>Add an image</label>
                 <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
 

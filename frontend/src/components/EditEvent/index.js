@@ -11,6 +11,8 @@ function EditEvent({ event, setEditEvent, tickets }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
+    const CATEGORIES = ['Charity', 'Fashion', 'Entertainmnet', 'Food', 'Politics', 'Fitness', 'Hobbies', 'Music', 'Religion', 'Sports', 'Other'];
+
     const [name, setName] = useState(event.name);
     const [about, setAbout] = useState(event.about);
     const [image, setImage] = useState(event.image);
@@ -18,12 +20,14 @@ function EditEvent({ event, setEditEvent, tickets }) {
     const [address, setAddress] = useState(event.address);
     const [city, setCity] = useState(event.city);
     const [state, setState] = useState(event.state);
-    const [category, setCategory] = useState(event.category);
+    const [category, setCategory] = useState(CATEGORIES.includes(event.category) ? event.category : 'Other');
     const [date, setDate] = useState(event.date);
     const [error, setError] = useState(false);
     const [ticketError, setTicketError] = useState(false);
+    const [otherCategory, setOtherCategory] = useState(CATEGORIES.includes(event.category) ? '' : event.category);
 
     const [newTickets, setNewTickets] = useState(tickets);
+
 
     if (!event) return null;
 
@@ -36,7 +40,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
             if (!newTickets[i].name.length || !newTickets[i].amount) err = true;
         }
 
-        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || err || !newTickets.length) {
+        if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || err || !newTickets.length || (category === 'Other' && !otherCategory.length)) {
             setError(true);
         } else {
             setError(false);
@@ -57,7 +61,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 city,
                 state,
                 country: 'United States',
-                category,
+                category: category === 'Other' ? otherCategory : category,
                 date,
                 tickets: newTickets
             }));
@@ -77,7 +81,10 @@ function EditEvent({ event, setEditEvent, tickets }) {
                 <label>Edit about</label>
                 <textarea placeholder='about' onChange={e => setAbout(e.target.value)} defaultValue={about}></textarea>
                 <label>Edit category</label>
-                <input placeholder='category' type='text' onChange={e => setCategory(e.target.value)} value={category}></input>
+                <select onChange={e => setCategory(e.target.value)} value={category}>
+                    { CATEGORIES.map(option => <option key={option} value={option}>{option}</option>) }
+                </select>
+                    { category === 'Other' && (<input type='text' placeholder='category' value={otherCategory} onChange={e => setOtherCategory(e.target.value)}></input>) }
                 <label>Change image</label>
                 <input placeholder='image' type='text' onChange={e => setImage(e.target.value)} value={image}></input>
 

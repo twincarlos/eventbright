@@ -1,5 +1,6 @@
 const express = require('express');
 const { User, Event, Ticket, Order } = require('../../db/models');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -8,7 +9,10 @@ router.get('/search/:location/:category', async (req, res) => {
     const category = req.params.category;
 
     if (location !== 'Any' && category === 'Any') {
-        const eventList = await Event.findAll({ where: { city: location } });
+        const eventList = await Event.findAll({ where: {
+            [Op.or]: [ { city: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } },
+                    { state: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } } ]
+        } });
         const events = [];
 
         for (let i = 0; i < eventList.length; i++) {
@@ -32,7 +36,15 @@ router.get('/search/:location/:category', async (req, res) => {
         return res.json(events);
     }
     else if (location !== 'Any' && category !== 'Any') {
-        const eventList = await Event.findAll({ where: [{ city: location }, { category }] });
+        const eventList = await Event.findAll({ where: {
+                [Op.and]: [
+                    {[Op.or]: [
+                        { city: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } },
+                        { state: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } }
+                    ]},
+                    { category }
+                ]
+        } });
         const events = [];
 
         for (let i = 0; i < eventList.length; i++) {
