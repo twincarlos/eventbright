@@ -127,10 +127,6 @@ function EditEvent({ event, setEditEvent, tickets }) {
                             :
                             setTicketError(true);
                         }}><i className="fas fa-minus"></i></button>
-                        <button onClick={e => {
-                            e.preventDefault();
-                            console.log(newTickets);
-                        }}>CONSOLE</button>
                     </div>))
                 }
                 <div id='save-buttons'>
