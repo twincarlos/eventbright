@@ -44,10 +44,10 @@ function Navigation({ isLoaded }) {
     <ul id='nav'>
       <li>
         <NavLink id='home-a' exact to="/"><img src={logo} alt=''></img></NavLink>
-        <form>
+        <div id='search-form'>
           { name.length ? <i className="fas fa-times-circle" onClick={() => setName('')}></i> : <i className="fas fa-search"></i>}
           <input type='text' placeholder='Search events' value={name} onChange={e => setName(e.target.value)}></input>
-        </form>
+        </div>
         {isLoaded && sessionLinks}
       </li>
       {

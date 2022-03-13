@@ -120,12 +120,17 @@ function EditEvent({ event, setEditEvent, tickets }) {
                         <input type='number' placeholder='ticket availability' defaultValue={ticket.amount === 0 ? '' : ticket.amount} onChange={e => {
                             setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(e.target.value) } : newTicket));
                         }}></input>
-                        <button onClick={() => {
+                        <button onClick={e => {
+                            e.preventDefault();
                             newTickets.filter(newTicket => !newTicket.delete).length > 1 ?
                             setNewTickets(newTickets.map(newTicket => newTicket.id === ticket.id ? { id: newTicket.id, name: newTicket.name, eventId: newTicket.eventId, price: Number(newTicket.price), amount: Number(newTicket.amount), delete: true } : newTicket))
                             :
                             setTicketError(true);
                         }}><i className="fas fa-minus"></i></button>
+                        <button onClick={e => {
+                            e.preventDefault();
+                            console.log(newTickets);
+                        }}>CONSOLE</button>
                     </div>))
                 }
                 <div id='save-buttons'>

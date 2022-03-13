@@ -122,7 +122,10 @@ router.put('/', async (req, res) => {
     const newTickets = [];
 
     for (let i = 0; i < tickets.length; i++) {
-        if (typeof tickets[i].id === 'number') {
+        if (tickets[i].delete) {
+            continue;
+        }
+        else if (typeof tickets[i].id === 'number') {
             const ticket = await Ticket.findByPk(tickets[i].id);
             await ticket.update({ name: tickets[i].name, eventId: tickets[i].eventId, price: Number(tickets[i].price), amount: tickets[i].amount });
             await ticket.save();
@@ -133,6 +136,8 @@ router.put('/', async (req, res) => {
             newTickets.push(newTicket.dataValues);
         }
     }
+
+    console.log(newTickets);
 
     return res.json({ event: editedEvent, host: host.dataValues, tickets: newTickets });
 });

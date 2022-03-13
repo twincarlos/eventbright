@@ -16,7 +16,7 @@ ul#nav > li {
     display: flex;
 }
 
-ul#nav > li > form {
+ul#nav > li > div#search-form {
     background-color: #f8f7fa;
     padding: 5px;
     position: absolute;
@@ -24,20 +24,20 @@ ul#nav > li > form {
     left: 200px;
 }
 
-ul#nav > li > form > input {
+ul#nav > li > div#search-form > input {
     background-color: transparent;
     border: none;
     outline: none;
     color: #9c9c9c;
 }
 
-ul#nav > li > form > i {
+ul#nav > li > div#search-form > i {
     background-color: transparent;
     border: none;
     color: #9c9c9c;
 }
 
-ul#nav > li > form > i.fa-times-circle {
+ul#nav > li > div#search-form > i.fa-times-circle {
     cursor: pointer;
 }
 
