@@ -12,7 +12,7 @@
 
 <div align="center">
   <a href="event-bright.herokuapp.com">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Eventbrite_Logo.svg/2560px-Eventbrite_Logo.svg.png" alt="Logo">
+    <img src="./frontend/src/assets/logo.png" alt="Logo">
   </a>
   <p align="center">Welcome to Eventbright, an Eventbrite clone...</p>
 </div>
