@@ -1,13 +1,5 @@
 # eventbright
 
-<style>
-   ul#tec-ul {
-      display: flex;
-      list-style: none;
-      justify-content: space-between;
-   }
-</style>
-
 <br />
 
 <div align="center">
