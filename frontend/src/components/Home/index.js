@@ -6,7 +6,7 @@ import EventWidget from './EventWidget';
 import './Home.css';
 
 function Home() {
-    const CATEGORIES = ['Any', 'Charity', 'Fashion', 'Entertainmnet', 'Food', 'Politics', 'Fitness', 'Hobbies', 'Music', 'Religion', 'Sports'];
+    const CATEGORIES = ['Any', 'Charity', 'Fashion', 'Entertainment', 'Food', 'Politics', 'Fitness', 'Hobbies', 'Music', 'Religion', 'Sports'];
     const [category, setCategory] = useState('Any');
     const [location, setLocation] = useState('');
 

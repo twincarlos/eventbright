@@ -28,7 +28,7 @@ function EventWidget({ event }) {
                 <NavLink to={`/events/${event.event.id}`}><p className='event-name'>{event.event.name}</p></NavLink>
                 <p className='event-date'>{date}</p>
                 <p className='event-location'>{event.event.venue} * {event.event.city}, {event.event.state}</p>
-                <p className='event-price'>Starts at ${((event.tickets.map(ticket => Number(ticket.price))).sort())[0]}</p>
+                {/* <p className='event-price'>Starts at ${((event.tickets.map(ticket => Number(ticket.price))).sort())[0]}</p> */}
                 <p className='event-host'>{event.host.username}</p>
             </div>
         </div>
