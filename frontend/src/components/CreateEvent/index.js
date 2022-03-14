@@ -54,6 +54,7 @@ function CreateEvent() {
         }
 
         if (!name.length || !about.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || ticketError || !tickets.length || err || ((new Date(date)).getTime() <= Date.now()) || (category === 'Other' && !otherCategory.length) ) {
+            window.scrollTo(0, 0);
             setError(true);
         } else {
             setError(false);

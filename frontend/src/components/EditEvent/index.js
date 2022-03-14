@@ -43,6 +43,7 @@ function EditEvent({ event, setEditEvent, tickets }) {
         }
 
         if (!name.length || !image.length || !venue.length || !address.length || !city.length || !state.length || !category.length || !date.length || err || !newTickets.length || (category === 'Other' && !otherCategory.length)) {
+            window.scrollTo(0, 0);
             setError(true);
         } else {
             setError(false);
