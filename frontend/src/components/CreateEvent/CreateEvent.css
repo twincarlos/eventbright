@@ -95,7 +95,7 @@ div.ticket-added > input {
     outline: none;
     height: 30px;
     margin: 2px;
-    width: 0%;
+    width: 30%;
 }
 
 div.ticket-added > button {
