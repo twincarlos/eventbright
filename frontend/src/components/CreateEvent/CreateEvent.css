@@ -61,12 +61,19 @@ div.ticket-info {
 }
 
 div.ticket-info > input {
-    background-color: #dbdbdb5d;
+    background-color: rgb(245, 245, 245);
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     outline: none;
     height: 30px;
     margin: 2px;
+    padding-left: 10px;
+    width: 35%;
+    transition: border .5s;
+}
+
+div.ticket-info > input:focus {
+    border: 1px solid #dbdbdb;
 }
 
 div.ticket-info > button {
@@ -88,7 +95,7 @@ div.ticket-added > input {
     outline: none;
     height: 30px;
     margin: 2px;
-    width: 30%;
+    width: 0%;
 }
 
 div.ticket-added > button {

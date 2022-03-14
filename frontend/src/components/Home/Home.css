@@ -78,6 +78,11 @@ div.event-widget {
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     margin-bottom: 20px;
+    transition: box-shadow .5s;
+}
+
+div.event-widget:hover {
+    box-shadow: 1px 1px 10px #dbdbdb;
 }
 
 div.event-widget > a > img {
