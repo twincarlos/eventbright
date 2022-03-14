@@ -1,5 +1,13 @@
 # eventbright
 
+<style>
+   ul#tec-ul {
+      display: flex;
+      list-style: none;
+      justify-content: space-between;
+   }
+</style>
+
 <br />
 
 <div align="center">
@@ -13,7 +21,7 @@
 [Eventbright](httpd://event-bright.herokuapp.com/)
 
 ## Built With
-<ul>
+<ul id='tec-ul'>
   <li><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/480px-Unofficial_JavaScript_logo_2.svg.png' alt='JS' width='40' height='40'></li>
   <li><img src='https://cdn-icons-png.flaticon.com/512/732/732212.png' alt='HTML' width='40' height='40'></li>
   <li><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/CSS3_logo.svg/800px-CSS3_logo.svg.png' alt='CSS' width='40' height='40'></li>
