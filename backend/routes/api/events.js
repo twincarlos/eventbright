@@ -123,7 +123,12 @@ router.put('/', async (req, res) => {
 
     for (let i = 0; i < tickets.length; i++) {
         if (tickets[i].delete) {
-            continue;
+            if (typeof tickets[i].id === 'number') {
+                const ticket = await Ticket.findByPk(tickets[i].id);
+                await ticket.destroy();
+            } else {
+                continue;
+            }
         }
         else if (typeof tickets[i].id === 'number') {
             const ticket = await Ticket.findByPk(tickets[i].id);
@@ -136,8 +141,6 @@ router.put('/', async (req, res) => {
             newTickets.push(newTicket.dataValues);
         }
     }
-
-    console.log(newTickets);
 
     return res.json({ event: editedEvent, host: host.dataValues, tickets: newTickets });
 });
