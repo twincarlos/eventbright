@@ -58,6 +58,6 @@
 <!-- CONTACT -->
 ## Contact
 
-githup: [@twincarlos](https://github.com/twincarlos) - twincarlos98@gmail.com
+github: [@twincarlos](https://github.com/twincarlos) - twincarlos98@gmail.com
 
 Project Link: [https://github.com/twincarlos/eventbright](https://github.com/twincarlos/eventbright)
