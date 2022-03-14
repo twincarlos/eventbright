@@ -3,14 +3,16 @@
 <br />
 
 <div align="center">
-  <a href="event-bright.herokuapp.com">
+  <a href="https://event-bright.herokuapp.com">
     <img src="./frontend/src/assets/logo.png" alt="Logo">
   </a>
-  <p align="center">Welcome to Eventbright, an Eventbrite clone...</p>
+  <p align="center">
+    Welcome to Eventbright, an Eventbrite clone where logged-in users can see all events available to attend as well as creating events for people to attend to!
+  </p>
 </div>
 
 ## Wiki
-[Eventbright](httpd://event-bright.herokuapp.com/)
+[Eventbright](https://event-bright.herokuapp.com/)
 
 ## Built With
 <ul id='tec-ul'>
