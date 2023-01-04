@@ -1,4 +1,4 @@
-const config = require('./index');
+const config = require('./index.js');
 
 const db = config.db;
 const username = db.username;

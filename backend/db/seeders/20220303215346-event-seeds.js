@@ -14,7 +14,7 @@ module.exports = {
       Example:
       */
 
-    options.tableName = 'Event';
+    options.tableName = 'Events';
     return queryInterface.bulkInsert(options, [
       // MUSIC
       {
@@ -486,7 +486,7 @@ module.exports = {
 
       Example:
       */
-    options.tableName = 'Event';
+    options.tableName = 'Events';
     return queryInterface.bulkDelete(options, null, {});
   }
 };
