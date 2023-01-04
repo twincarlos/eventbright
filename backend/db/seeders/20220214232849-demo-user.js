@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    options.tableName = '<TableName>';
+    options.tableName = 'User';
 
     return queryInterface.bulkInsert(options, [
       {
@@ -76,7 +76,7 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    options.tableName = '<TableName>';
+    options.tableName = 'User';
 
     return queryInterface.bulkDelete(options, {
       username: { [Op.in]: ['musicproduction'] }
